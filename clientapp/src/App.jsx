@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { Button } from '@mantine/core';
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
@@ -33,6 +34,7 @@ function App() {
       {weatherData && weatherData.map(data => (
         <h5>{`${data.date}: ${data.temperatureF}°F,  ${data.summary}`}</h5>
       ))}
+      <Button variant="filled">Test Button!</Button>
       <div className="card">
         <button onClick={() => setCount((count) => count + 1)}>
           count is {count}
