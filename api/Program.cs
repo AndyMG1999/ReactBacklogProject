@@ -4,6 +4,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -19,7 +20,7 @@ var summaries = new[]
     "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
 };
 
-app.MapGet("/weatherforecast", () =>
+app.MapGet("api/weatherforecast", () =>
 {
     var forecast =  Enumerable.Range(1, 5).Select(index =>
         new WeatherForecast

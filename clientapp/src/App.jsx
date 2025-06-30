@@ -1,10 +1,23 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [count, setCount] = useState(0);
+  const [weatherData, setWeatherData] = useState(null);
+
+  const fetchReponse = async () => {
+    const response = await fetch(`./api/weatherforecast/`);
+    console.log("response: ",response);
+    const json = await response.json();
+    console.log("json:", json);
+    setWeatherData(json);
+  }
+
+  useEffect(() => {
+    fetchReponse();
+  },[]);
 
   return (
     <>
@@ -17,6 +30,9 @@ function App() {
         </a>
       </div>
       <h1>Vite + React</h1>
+      {weatherData && weatherData.map(data => (
+        <h5>{`${data.date}: ${data.temperatureF}°F,  ${data.summary}`}</h5>
+      ))}
       <div className="card">
         <button onClick={() => setCount((count) => count + 1)}>
           count is {count}
