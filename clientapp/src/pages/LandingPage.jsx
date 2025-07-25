@@ -2,8 +2,27 @@ import { Button, Stack } from "@mantine/core";
 
 const LandingPage = () => {
     return(
-        <Stack>
-            Landing Page
+        <Stack >
+            <Button>Test</Button>
+            <Button>Test</Button>
+            <Button>Test</Button>
+            <Button>Test</Button>
+            <Button>Test</Button>
+            <Button>Test</Button>
+            <Button>Test</Button>
+            <Button>Test</Button>
+            <Button>Test</Button>
+            <Button>Test</Button>
+            <Button>Test</Button>
+            <Button>Test</Button>
+            <Button>Test</Button>
+            <Button>Test</Button>
+            <Button>Test</Button>
+            <Button>Test</Button>
+            <Button>Test</Button>
+            <Button>Test</Button>
+            <Button>Test</Button>
+            
         </Stack>
     )
 }
