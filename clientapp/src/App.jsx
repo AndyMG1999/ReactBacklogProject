@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { Box, Button, Flex } from '@mantine/core';
 import Toolbar from './menus/Toolbar';
-import LandingPage from './pages/LandingPage';
+import LandingPage from './pages/Landing Page/LandingPage';
 
 function App() {
   const [count, setCount] = useState(0);
