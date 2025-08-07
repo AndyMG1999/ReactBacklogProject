@@ -53,7 +53,7 @@ export const mainTheme = createTheme({
     "#362078"
     ],
     'backgroundBrown': [
-    "#FFDBA8",
+    "#D4EDF9",
     ],
   }
 });

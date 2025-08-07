@@ -10,6 +10,6 @@ createRoot(document.getElementById('root')).render(
   <MantineProvider theme={mainTheme} >
     <StrictMode>
       <App />
-    </StrictMode>,
+    </StrictMode>
   </MantineProvider>
 )

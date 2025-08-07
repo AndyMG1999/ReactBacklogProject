@@ -8,6 +8,11 @@ const LoginModal = (props) => {
     const isReturningUser = props.isReturningUser;
 
     const modalStyle = {
+        header: { 
+            backgroundColor: 'rgba(255, 255, 255, 0.1)', // Semi-transparent background
+            backdropFilter: 'blur(5px)', // Frosted glass effect
+            WebkitBackdropFilter: 'blur(5px)' // For Safari compatibility
+          },
         content: {
             background: 'rgba(255,255,255,0.25)',
             backdropFilter: 'blur(12px)',
@@ -18,7 +23,7 @@ const LoginModal = (props) => {
     };
 
     return(
-        <Modal opened={opened} onClose={onClose} title="Authentication" centered transitionProps={{ transition: 'rotate-left' }} overlayProps={{ backgroundOpacity: 0.05, blur: 2.5,}} styles={modalStyle}>
+        <Modal opened={opened} onClose={onClose} title="Authentication" centered transitionProps={{ transition: 'rotate-left' }} overlayProps={{ backgroundOpacity: 0.05, blur: 1.5,}} styles={modalStyle}>
             {isReturningUser? <LoginFields /> : <SignupFields />}
         </Modal>
     )
