@@ -7,17 +7,8 @@ import Snowfall from 'react-snowfall';
 const LandingPage = () => {
   const [imageURL, setImageURL] = useState("");
 
-  const getRandomPhoto = async () => {
-    // Get total number of artworks
-    const response = await fetch("https://picsum.photos/1920/1080");
-    console.log("response",response);
-
-    setImageURL(response.url);
-  }
-
   return (
     <Container fluid w={"100%"} bg={"backgroundBrown.0"} display="flex" direction="column" style={{ minHeight: '90vh', overflow: 'hidden' }}>
-      <Snowfall color='#03a9f4' snowflakeCount={25} wind={[0,0]} radius={[0.5,3]} speed={[7.5,10]}/>
       <BackgroundImage src={""} flex={1} minheight={0}>
         <Stack justify="center" align="flex-start" h={"100%"}>
           <LandingPageTitle />

@@ -29,12 +29,12 @@ const SidebarModal = (props) => {
 
     return(
         <Drawer opened={opened} onClose={onClose} offset={20} size="10em" radius="xl" overlayProps={{ backgroundOpacity: 0.08, blur: 1 }} styles={modalStyle}>
-            <Stack align="center" gap={"3em"}>
-                <SidebarButton IconComponent={PiBeerBottleBold}/>
-                <SidebarButton IconComponent={TbBeach}/>
-                <SidebarButton IconComponent={IoStatsChart}/>
-                <SidebarButton IconComponent={FaLifeRing}/>
-                <SidebarButton IconComponent={FaGear}/>
+            <Stack align="center" gap={"3em"} pt={"md"}>
+                <SidebarButton tooltipLabel="The Shore" IconComponent={PiBeerBottleBold}/>
+                <SidebarButton tooltipLabel="The Beach" IconComponent={TbBeach}/>
+                <SidebarButton tooltipLabel="Stats" IconComponent={IoStatsChart}/>
+                <SidebarButton tooltipLabel="Help" IconComponent={FaLifeRing}/>
+                <SidebarButton tooltipLabel="Settings" IconComponent={FaGear}/>
             </Stack>
         </Drawer>
     )
