@@ -14,7 +14,7 @@ const FeedMessageCard = (props) => {
     }
 
     const id = props.id;
-    const messageTitle = props.messageTitle || "If you see this it is because there is no message title set. Consider setting messageTitle to something!";
+    const messageTitle = props.messageTitle || "If you see this, it means there is no message title set. Consider setting messageTitle to something!";
     const messageContent = props.messageContent || randomLengthLorum();
     const messageLikes = Math.floor(Math.random() * 100);
     const bottleCount = Math.floor(Math.random() * 100);
@@ -26,15 +26,16 @@ const FeedMessageCard = (props) => {
     }
 
     const cardStyle = {
-        backdropFilter: 'blur(5px)', // The core frosted glass effect
-        backgroundColor: 'rgba(255, 255, 255, 0.1)', // Semi-transparent background
+        background: 'rgba(255, 255, 255, 0.25)', // semi-transparent
+        backdropFilter: 'blur(12px)',            // blur effect
+        WebkitBackdropFilter: 'blur(12px)', 
         border: '1px solid rgba(255, 255, 255, 0.2)', // Light border
     }
 
     return(
         <Card padding="lg" shadow="lg" radius="lg" withBorder style={cardStyle}>
             <Card.Section inheritPadding pt={"md"}>
-                <Title order={3} lineClamp={2}>{messageTitle}</Title>
+                <Title order={2} lineClamp={2}>{messageTitle}</Title>
             </Card.Section>
             <Group>
                 <Pill size="lg">Test Pill</Pill>
@@ -43,7 +44,7 @@ const FeedMessageCard = (props) => {
             </Group>
 
             <Card.Section inheritPadding>
-                <Text lineClamp={5}>{messageContent}</Text>
+                <Text size="lg" lineClamp={5}>{messageContent}</Text>
             </Card.Section>
 
             <Group pt={"sm"}>

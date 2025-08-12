@@ -18,7 +18,7 @@ const SidebarButton = (props) => {
     };
 
     return(
-        <Tooltip label={tooltipLabel} color={tooltipColor} position="right"radius="lg" transitionProps={{ transition: 'slide-left', duration: 200 }}>
+        <Tooltip label={tooltipLabel} color={tooltipColor} position="right"radius="lg" fw="bold" transitionProps={{ transition: 'slide-left', duration: 200 }}>
             <ActionIcon size={iconSize} {...props} radius={"lg"} style={buttonStyle}>
                 <IconComponent style={iconComponentStyle} />
             </ActionIcon>

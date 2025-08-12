@@ -28,7 +28,7 @@ const Toolbar = () => {
             <Group justify="space-between" preventGrowOverflow={false} style={{ width: '100%' }}>
                 <Group>
                     <SidebarModal opened={openSidebarModal} onClose={()=>setOpenSidebarModal(false)}/>
-                    <ActionIcon variant="subtle" size={"xl"} onClick={()=>setOpenSidebarModal(true)}><MdMenu size={iconSize}/></ActionIcon>
+                    <ActionIcon color="white" variant="subtle" size={"xl"} onClick={()=>setOpenSidebarModal(true)}><MdMenu size={iconSize}/></ActionIcon>
                     <Title order={1}>Rainy Day</Title>
                 </Group>
 

@@ -52,8 +52,8 @@ export const mainTheme = createTheme({
     "#482c9b",
     "#362078"
     ],
-    'backgroundBrown': [
-    "#D4EDF9",
+    'backgroundSkyDay': [
+    "#d3eefbff",
     ],
   }
 });
