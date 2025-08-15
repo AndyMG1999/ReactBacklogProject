@@ -7,7 +7,7 @@ const LoginFields = () => {
             <PasswordInput label="Password" placeholder="Enter Your Password"/>
             <Checkbox label="Remember Me" />
             <Button>Log In</Button>
-            <Button variant="subtle">umm... forgot my password :(</Button>
+            <Button variant="subtle" color="cozyGreen">umm... forgot my password :(</Button>
         </Stack>
     )
 }

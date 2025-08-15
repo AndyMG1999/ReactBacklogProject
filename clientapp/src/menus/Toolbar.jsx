@@ -29,7 +29,7 @@ const Toolbar = () => {
                 <Group>
                     <SidebarModal opened={openSidebarModal} onClose={()=>setOpenSidebarModal(false)}/>
                     <ActionIcon color="white" variant="subtle" size={"xl"} onClick={()=>setOpenSidebarModal(true)}><MdMenu size={iconSize}/></ActionIcon>
-                    <Title order={1}>Rainy Day</Title>
+                    <Title order={1} fz={"3em"}>Rainy Day</Title>
                 </Group>
 
                 <Group>

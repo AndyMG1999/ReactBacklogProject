@@ -6,9 +6,16 @@ import { useState } from "react";
 
 const MessagesPage = () => {
     const [sendOrRecieveBottle, setSendOrRecieveBottle] = useState(null);
+    
+    const messagePageStyle = {
+        display: "flex",
+        flexDirection: "column",
+        minHeight: "90vH"
+    }
+
     return(
-        <Stack align="center">
-            <Stack gap={"xs"} w={"90%"} align="center" bg={"backgroundBrown.0"} p={"md"}>
+        <Stack align="center" style={messagePageStyle}>
+            <Stack gap={"xs"} w={"90%"} align="center" p={"md"}>
                 {sendOrRecieveBottle == "recieve"? <h1>Recieve</h1>:
                 sendOrRecieveBottle == "send"? <CreateMessageForm />:
                 <SendOrRecieveBottleForm setSendOrRecieve={setSendOrRecieveBottle}/>}

@@ -17,7 +17,7 @@ const FeedMessageCard = (props) => {
     const messageTitle = props.messageTitle || "If you see this, it means there is no message title set. Consider setting messageTitle to something!";
     const messageContent = props.messageContent || randomLengthLorum();
     const messageLikes = Math.floor(Math.random() * 100);
-    const bottleCount = Math.floor(Math.random() * 100);
+    const bottleCount = Math.floor(Math.random() * 20);
 
 
     const iconComponentStyle = {

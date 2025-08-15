@@ -55,5 +55,17 @@ export const mainTheme = createTheme({
     'backgroundSkyDay': [
     "#d3eefbff",
     ],
+    'backgroundBlue': [
+      "#eff7fa",
+      "#e0eaf0",
+      "#bcd4e1",
+      "#94bdd4",
+      "#75aac8",
+      "#619ec1",
+      "#5598bf",
+      "#4684a8",
+      "#3a7597",
+      "#102936"
+    ]
   }
 });

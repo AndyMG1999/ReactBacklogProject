@@ -1,10 +1,13 @@
-import { ActionIcon, Tooltip } from "@mantine/core"
+import { ActionIcon, Tooltip } from "@mantine/core";
+import { Link } from "react-router";
 
-const SidebarButton = (props) => {
+const SidebarButton = ({iconcomponent, ...props}) => {
     const iconSize = props.actionSize || 80;
-    const tooltipLabel = props.tooltipLabel;
-    const tooltipColor = props.tooltipColor || "cozyGreen"; 
-    const IconComponent = props.IconComponent;
+    const tooltipLabel = props.tooltiplabel;
+    const tooltipColor = props.tooltipColor || "cozyGreen";
+    const linkto = props.linkto;
+    const IconComponent = iconcomponent;
+
     const iconComponentStyle = {
         width: "65%",
         height: "65%",
@@ -19,9 +22,11 @@ const SidebarButton = (props) => {
 
     return(
         <Tooltip label={tooltipLabel} color={tooltipColor} position="right"radius="lg" fw="bold" transitionProps={{ transition: 'slide-left', duration: 200 }}>
+            <Link to={linkto}>
             <ActionIcon size={iconSize} {...props} radius={"lg"} style={buttonStyle}>
                 <IconComponent style={iconComponentStyle} />
             </ActionIcon>
+            </Link>
         </Tooltip>
     )
 }

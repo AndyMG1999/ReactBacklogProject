@@ -5,11 +5,14 @@ import './index.css'
 import App from './App.jsx'
 import { MantineProvider } from '@mantine/core';
 import { mainTheme } from './themes/themes.js';
+import { BrowserRouter } from 'react-router';
 
 createRoot(document.getElementById('root')).render(
   <MantineProvider theme={mainTheme} >
     <StrictMode>
-      <App />
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
     </StrictMode>
   </MantineProvider>
 )

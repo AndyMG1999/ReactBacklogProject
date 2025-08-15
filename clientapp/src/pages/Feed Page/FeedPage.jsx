@@ -28,10 +28,10 @@ const FeedPage = () => {
     //     borderRadius: '8px',
     // }
 
-    return( 
+    return(
         <Stack align="center" pt={"xs"}>
             <Stack w={"70%"}>
-                {dummyData.map(data => <FeedMessageCard id={data.id}/>)}
+                {dummyData.map(data => <FeedMessageCard key={data.id} id={data.id}/>)}
             </Stack>
         </Stack>
     );

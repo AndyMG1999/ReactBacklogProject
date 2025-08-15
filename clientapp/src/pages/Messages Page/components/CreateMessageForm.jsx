@@ -1,4 +1,4 @@
-import { Container, Button, Stack, TextInput, Textarea, TagsInput, Checkbox } from "@mantine/core";
+import { Container, Avatar, Button, Stack, TextInput, Textarea, TagsInput, Checkbox, Text, Select,Group } from "@mantine/core";
 
 const CreateMessageForm = () => {
     const containerStyle = {
@@ -24,6 +24,8 @@ const CreateMessageForm = () => {
         {id: 0,label:"🍾 All Seven Seas",numberOfBottles:13442},
     ]
 
+    const sendOffsData =['Warm Regards,', 'Sincerely,', 'Take Care!']
+
     const tagsStringData = fullTagsData.map((data)=>data.label);
     return(
         <Stack w={"50%"} align="center">
@@ -45,6 +47,11 @@ const CreateMessageForm = () => {
                     />
                     <Textarea placeholder="Enter you message here!" autosize minRows={10} maxRows={10} />
                     <Checkbox label="Allow Multiple Responses" />
+                    <Group>
+                        <Select placeholder="Pick a sendoff!" allowDeselect={false} fw={"bold"} data={sendOffsData} />
+                        <Text fw="bold">Account Name</Text>
+                        <Avatar color="cozyGreen"/>
+                    </Group>
                 </Stack>
             </Container>
 
