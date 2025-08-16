@@ -1,7 +1,6 @@
 import { Button, Container, Stack, TextInput, Textarea, Transition } from "@mantine/core";
 import SendOrRecieveBottleForm from "./components/SendOrRecieveForm";
 import CreateMessageForm from "./components/CreateMessageForm";
-import Snowfall from "react-snowfall";
 import { useState } from "react";
 
 const MessagesPage = () => {
@@ -14,8 +13,8 @@ const MessagesPage = () => {
     }
 
     return(
-        <Stack align="center" style={messagePageStyle}>
-            <Stack gap={"xs"} w={"90%"} align="center" p={"md"}>
+        <Stack justify="center" align="center" style={messagePageStyle}>
+            <Stack gap={"xs"} w={"90%"} p={"md"} align="center">
                 {sendOrRecieveBottle == "recieve"? <h1>Recieve</h1>:
                 sendOrRecieveBottle == "send"? <CreateMessageForm />:
                 <SendOrRecieveBottleForm setSendOrRecieve={setSendOrRecieveBottle}/>}

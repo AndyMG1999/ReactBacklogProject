@@ -3,8 +3,8 @@ import { Container, Avatar, Button, Stack, TextInput, Textarea, TagsInput, Check
 const CreateMessageForm = () => {
     const containerStyle = {
         background: 'rgba(255,255,255,0.25)',
-        backdropFilter: 'blur(12px)',
-        WebkitBackdropFilter: 'blur(12px)',
+        backdropFilter: 'blur(2px)',
+        WebkitBackdropFilter: 'blur(2px)',
         border: '1px solid rgba(255,255,255,0.3)',
         boxShadow: '0 4px 24px rgba(0,0,0,0.08)',
         borderRadius: '16px'
@@ -12,8 +12,8 @@ const CreateMessageForm = () => {
 
     const fieldsetStyle = {
         background: 'rgba(255,255,255,0.25)',
-        backdropFilter: 'blur(12px)',
-        WebkitBackdropFilter: 'blur(12px)',
+        backdropFilter: 'blur(8px)',
+        WebkitBackdropFilter: 'blur(8px)',
         border: '1px solid rgba(255,255,255,0.3)',
         boxShadow: '0 2px 12px rgba(0,0,0,0.06)',
         borderRadius: '12px',
