@@ -2,10 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using api.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
-namespace api.controllers
+namespace api.Controllers
 {
     [ApiController]
     [Route("api/Post")]
@@ -23,6 +24,15 @@ namespace api.controllers
         {
             var posts = await _context.Posts.ToListAsync();
             return Ok(posts);
+        }
+
+        [HttpGet("Get/{id}")]
+        public async Task<IActionResult> Get(int id)
+        {
+            Post? post = await _context.Posts.FindAsync(id);
+            if (post == null) return NotFound();
+            
+            return Ok(post);
         }
     }
 }

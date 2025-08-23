@@ -1,4 +1,4 @@
-using api.models;
+using api.Models;
 using Microsoft.EntityFrameworkCore;
 
 public class DatabaseContext(DbContextOptions<DatabaseContext> options) : DbContext(options)
