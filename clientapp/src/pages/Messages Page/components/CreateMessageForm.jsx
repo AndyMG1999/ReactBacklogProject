@@ -1,4 +1,5 @@
 import { Container, Avatar, Button, Stack, TextInput, Textarea, TagsInput, Checkbox, Text, Select,Group } from "@mantine/core";
+import AttachButton from "./AttachButton";
 
 const CreateMessageForm = () => {
     const containerStyle = {
@@ -32,6 +33,7 @@ const CreateMessageForm = () => {
             <Container w={"100%"} style={containerStyle}>
                 <Stack gap={"md"} p={"10px"}>
                     <TextInput fw={"bold"} pt={"20px"} placeholder="Title your bottle here!"/>
+                    
                     <TagsInput
                     required
                     radius="lg"
@@ -45,12 +47,18 @@ const CreateMessageForm = () => {
                         return `${tag.option.value} -${fullTagsData.find(data => data.label == tag.option.value).numberOfBottles} Bottles Sent!`;
                     }}
                     />
+                    
                     <Textarea placeholder="Enter you message here!" autosize minRows={10} maxRows={10} />
+                    
+                    <AttachButton />
+                    
                     <Checkbox label="Allow Multiple Responses" />
+                    
                     <Group>
                         <Select placeholder="Pick a sendoff!" allowDeselect={false} fw={"bold"} data={sendOffsData} />
                         <Text fw="bold">Account Name</Text>
                         <Avatar color="cozyGreen"/>
+                    
                     </Group>
                 </Stack>
             </Container>

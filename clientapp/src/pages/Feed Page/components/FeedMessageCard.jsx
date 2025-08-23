@@ -6,6 +6,7 @@ import { PiBeerBottleLight } from "react-icons/pi";
 import { PiShareFat } from "react-icons/pi";
 import { useHover } from "@mantine/hooks";
 import { useState } from "react";
+import SoundCloudPlayer from "./SoundCloudPlayer";
 
 const FeedMessageCard = (props) => {
 
@@ -51,6 +52,12 @@ const FeedMessageCard = (props) => {
                     <Pill size="lg">Test Pill</Pill>
                     <Pill size="lg">Test Pill</Pill>
                 </Group>
+                
+                <Card.Section inheritPadding align="center">
+                    <Group w={{xs:"100%", lg: "75%"}} p={"xs"} m={{xs:"xs", s:"lg"}} bdrs={"lg"} align="center" bd="2px solid white">
+                        <SoundCloudPlayer />
+                    </Group>
+                </Card.Section>
 
                 <Card.Section inheritPadding pb={"md"}>
                     <Text size="lg" lineClamp={5} c={textColor}>{messageContent}</Text>
