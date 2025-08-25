@@ -7,7 +7,7 @@ namespace api.Models
 {
     public class Tag
     {
-        public int ID;
-        public string? TagName;
+        public int ID { get; set; }
+        public string? TagName { get; set; }
     }
 }

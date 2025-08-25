@@ -1,15 +1,19 @@
 using api.Models;
 using Microsoft.EntityFrameworkCore;
 
-public class DatabaseContext(DbContextOptions<DatabaseContext> options) : DbContext(options)
+namespace api.Contexts
 {
-    public DbSet<Post> Posts { get; set; }
-    public DbSet<Tag> Tags { get; set; }
-    public DbSet<Attachment> Attachments { get; set; }
-
-    // Optional: Override OnModelCreating for advanced model configuration
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    public class DatabaseContext : DbContext
     {
-        // Configure entity properties, relationships, etc.
+        public DatabaseContext(DbContextOptions dbContextOptions)
+        : base(dbContextOptions)
+        {
+
+        }
+
+        public DbSet<Post> Posts { get; set; }
+        public DbSet<Tag> Tags { get; set; }
+        public DbSet<Attachment> Attachments { get; set; }
     }
+    
 }

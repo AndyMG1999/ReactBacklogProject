@@ -20,8 +20,16 @@ function App() {
     setWeatherData(json);
   }
 
+  const fetchDummyData = async () => {
+    const response = await fetch(`./api/post/GetAll`);
+    console.log("API Reponse:",response);
+    const data = await response.json();
+    console.log("API Data:",data);
+  }
+
   useEffect(() => {
     fetchReponse();
+    fetchDummyData();
   },[]);
 
   const backgroundStyle = {

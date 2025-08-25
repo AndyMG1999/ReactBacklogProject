@@ -5,11 +5,12 @@ using System.Threading.Tasks;
 using api.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using api.Contexts;
 
 namespace api.Controllers
 {
     [ApiController]
-    [Route("api/Post")]
+    [Route("api/post")]
     public class PostController : Controller
     {
         private readonly DatabaseContext _context;
