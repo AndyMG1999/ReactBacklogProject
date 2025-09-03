@@ -6,10 +6,15 @@ using System.Threading.Tasks;
 
 namespace api.Models
 {
+    public enum AttachmentTypes
+    {
+        Souncloudlink,
+        YoutubeLink,
+    }
     public class Attachment
     {
         public int ID { get; set; }
-        public string? AttachmentType { get; set; }
+        public AttachmentTypes? AttachmentType { get; set; }
         public string? AttachmentLink { get; set; }
         public int PostID { get; set; }
 
