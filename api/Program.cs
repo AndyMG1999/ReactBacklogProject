@@ -2,7 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using api.Models;
 using Microsoft.OpenApi.Models;
 using api.Contexts;
-
+using api.Hubs;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,9 +10,16 @@ var builder = WebApplication.CreateBuilder(args);
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSignalR();
 builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new OpenApiInfo { Title = "API", Version = "v1" });
+});
+
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(policy =>
+        policy.AllowAnyHeader().AllowAnyMethod().AllowCredentials().WithOrigins("http://localhost:5173"));
 });
 
 // builder.Services.AddDbContext<DatabaseContext>(options =>
@@ -76,7 +83,11 @@ app.MapGet("api/weatherforecast", () =>
 })
 .WithName("GetWeatherForecast");
 
+app.UseCors();
 app.MapControllers();
+
+app.MapHub<TestHub>("/testhub");
+
 app.Run();
 
 record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)

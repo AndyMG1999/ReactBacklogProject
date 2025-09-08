@@ -6,7 +6,9 @@ import MessagesPage from './pages/Messages Page/MessagesPage';
 import FeedPage from './pages/Feed Page/FeedPage';
 import Snowfall from 'react-snowfall';
 import { Routes,Route } from 'react-router';
+import * as signalR from '@microsoft/signalr';
 function App() {
+  let connection;
   const [count, setCount] = useState(0);
   const [weatherData, setWeatherData] = useState(null);
   const theme = useMantineTheme();
@@ -27,9 +29,25 @@ function App() {
     console.log("API Data:",data);
   }
 
+  const setUpConnection = async () => {
+    connection = new signalR.HubConnectionBuilder()
+      .withUrl('http://localhost:5224/testhub') // Replace with your hub URL
+      .configureLogging(signalR.LogLevel.Information)
+      .build();
+    try{
+        await connection.start();
+        console.log("SignalR Connection Successful!");
+    }
+    catch(err)
+    {
+        console.error('SignalR Connection Error: ', err);
+    }
+  }
+
   useEffect(() => {
     fetchReponse();
     fetchDummyData();
+    setUpConnection();
   },[]);
 
   const backgroundStyle = {

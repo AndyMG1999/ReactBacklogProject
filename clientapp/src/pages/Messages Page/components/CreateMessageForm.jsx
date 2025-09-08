@@ -1,5 +1,7 @@
 import { Container, Avatar, Button, Stack, TextInput, Textarea, TagsInput, Checkbox, Text, Select,Group } from "@mantine/core";
 import AttachButton from "./AttachButton";
+import * as signalR from '@microsoft/signalr';
+import { useEffect } from "react";
 
 const CreateMessageForm = () => {
     const containerStyle = {
@@ -28,6 +30,8 @@ const CreateMessageForm = () => {
     const sendOffsData =['Warm Regards,', 'Sincerely,', 'Take Care!']
 
     const tagsStringData = fullTagsData.map((data)=>data.label);
+
+    // Example usage:
     return(
         <Stack w={"50%"} align="center">
             <Container w={"100%"} style={containerStyle}>
