@@ -3,6 +3,7 @@ using api.Models;
 using Microsoft.OpenApi.Models;
 using api.Contexts;
 using api.Hubs;
+using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,6 +12,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSignalR();
+builder.Services.AddAuthorization();
 builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new OpenApiInfo { Title = "API", Version = "v1" });
@@ -27,8 +29,9 @@ builder.Services.AddCors(options =>
 
 // Configure your DbContext to use the in-memory database
 builder.Services.AddDbContext<DatabaseContext>(options =>
-    options.UseInMemoryDatabase("DummyDb"));
-
+    options.UseInMemoryDatabase("inMemoryDb"));
+builder.Services.AddIdentityApiEndpoints<IdentityUser>()
+    .AddEntityFrameworkStores<DatabaseContext>();
 
 var app = builder.Build();
 
@@ -81,13 +84,17 @@ app.MapGet("api/weatherforecast", () =>
         .ToArray();
     return forecast;
 })
-.WithName("GetWeatherForecast");
+.WithName("GetWeatherForecast")
+.RequireAuthorization();
 
 app.UseCors();
 app.MapControllers();
 
+// Map Hubs From SignalR Here
 app.MapHub<TestHub>("/testhub");
-
+// Map Identity Models Here
+// Replace "IdentityUser" With Custom Identity Model When Ready
+app.MapIdentityApi<IdentityUser>();
 app.Run();
 
 record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)

@@ -35,12 +35,19 @@ function App() {
       .configureLogging(signalR.LogLevel.Information)
       .build();
     try{
-        await connection.start();
-        console.log("SignalR Connection Successful!");
+      await connection.start();
+      console.log("Realtime Connection Successful!");
+
+      // let userInput = prompt("[SignalR Test] Enter User:");
+      // let messageInput = prompt("[SignalR Test] Enter Message:");
+      // connection.invoke("SendMessage", userInput, messageInput);
+
+      // connection.on("ReceiveMessage", (user, message) => {
+      //   console.log(`${user}: ${message}`);
+      // });
     }
-    catch(err)
-    {
-        console.error('SignalR Connection Error: ', err);
+    catch(err){
+      console.error('SignalR Connection Error: ', err);
     }
   }
 

@@ -1,9 +1,11 @@
 using api.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 
 namespace api.Contexts
 {
-    public class DatabaseContext : DbContext
+    public class DatabaseContext : IdentityDbContext<IdentityUser>
     {
         public DatabaseContext(DbContextOptions dbContextOptions)
         : base(dbContextOptions)
