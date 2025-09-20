@@ -30,7 +30,7 @@ builder.Services.AddCors(options =>
 // Configure your DbContext to use the in-memory database
 builder.Services.AddDbContext<DatabaseContext>(options =>
     options.UseInMemoryDatabase("inMemoryDb"));
-builder.Services.AddIdentityApiEndpoints<IdentityUser>()
+builder.Services.AddIdentityApiEndpoints<AppUser>()
     .AddEntityFrameworkStores<DatabaseContext>();
 
 var app = builder.Build();
@@ -94,7 +94,7 @@ app.MapControllers();
 app.MapHub<TestHub>("/testhub");
 // Map Identity Models Here
 // Replace "IdentityUser" With Custom Identity Model When Ready
-app.MapIdentityApi<IdentityUser>();
+app.MapIdentityApi<AppUser>();
 app.Run();
 
 record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)

@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Identity;
 
 namespace api.Contexts
 {
-    public class DatabaseContext : IdentityDbContext<IdentityUser>
+    public class DatabaseContext : IdentityDbContext<AppUser>
     {
         public DatabaseContext(DbContextOptions dbContextOptions)
         : base(dbContextOptions)
