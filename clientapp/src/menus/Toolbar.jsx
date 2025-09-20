@@ -2,7 +2,7 @@ import { Group, ActionIcon, Button, Title, Box, Container, Divider } from '@mant
 import { alpha, } from '@mantine/core';
 import { FaGithub,FaDiscord,FaInstagram } from "react-icons/fa";
 import { MdMenu } from "react-icons/md";
-import { useState } from 'react';
+import { useState,useEffect } from 'react';
 import LoginModal from '../pages/Login Signup/LoginModal';
 import SidebarModal from './Sidebar/SidebarModal';
 
@@ -10,23 +10,36 @@ const Toolbar = () => {
     const [openLoginModal, setOpenLoginModal] = useState(false);
     const [openSidebarModal, setOpenSidebarModal] = useState(false);
     const [isReturningUser, setIsReturningUser] = useState(false);
+    const [isAtTop, setIsAtTop] = useState(true);
 
     const iconSize = "2em"
     const toolbarStyle = {
         zIndex: 10,
-        borderRadius: "40px",
+        borderRadius: isAtTop? "20px" : "40px",
         background: 'rgba(255, 255, 255, 0.10)',
         backdropFilter: 'blur(10px) saturate(180%)',
         WebkitBackdropFilter: 'blur(10px) saturate(180%)',
         border: '1px solid rgba(255,255,255,0.3)',
-        boxShadow: '0 4px 24px rgba(0,0,0,0.08)',
+        boxShadow: isAtTop?"":'0 4px 24px rgba(0,0,0,0.08)',
         overflow: "hidden",
-        position: "relative"
+        position: "relative",
     };
 
+    // Use Effect for checking if Scroll is on top of screen
+    useEffect(() => {
+        const handleScroll = () => {
+        setIsAtTop(window.scrollY < 250);
+        };
+
+        window.addEventListener('scroll', handleScroll);
+
+        return () => {
+        window.removeEventListener('scroll', handleScroll);
+        };
+    }, []);
 
     return(
-        <Container fluid display={"flex"} pos={"sticky"} top={0} w={"90%"} h={"7em"} style={toolbarStyle}>
+        <Container fluid display={"flex"} pos={"sticky"} top={0} w={isAtTop?"100%":"90%"} h={"7em"} mt={!isAtTop&&"xs"} style={toolbarStyle}>
             <Group justify="space-between" preventGrowOverflow={false} style={{ width: '100%' }}>
                 <Group>
                     <SidebarModal opened={openSidebarModal} onClose={()=>setOpenSidebarModal(false)}/>
