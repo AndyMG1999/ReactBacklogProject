@@ -15,11 +15,13 @@ const Toolbar = () => {
     const toolbarStyle = {
         zIndex: 10,
         borderRadius: "40px",
-        background: 'rgba(255, 255, 255, 0.25)', // semi-transparent
-        backdropFilter: 'blur(12px)',            // blur effect
-        WebkitBackdropFilter: 'blur(12px)',      // Safari support
-        border: '1px solid rgba(255,255,255,0.3)', // subtle border
+        background: 'rgba(255, 255, 255, 0.10)',
+        backdropFilter: 'blur(10px) saturate(180%)',
+        WebkitBackdropFilter: 'blur(10px) saturate(180%)',
+        border: '1px solid rgba(255,255,255,0.3)',
         boxShadow: '0 4px 24px rgba(0,0,0,0.08)',
+        overflow: "hidden",
+        position: "relative"
     };
 
 
