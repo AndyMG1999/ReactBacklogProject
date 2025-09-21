@@ -1,7 +1,11 @@
-import { Stack,TextInput,PasswordInput,Button,Group,Popover } from "@mantine/core";
+import { Stack,TextInput,PasswordInput,Button,Group,Popover, Alert } from "@mantine/core";
 import {useForm,isEmail,matchesField} from '@mantine/form';
+import { registerUser } from "../../services/authServices";
+import { useState } from "react";
 
 const SignupFields = () => {
+    const [openAlert, setOpenAlert] = useState(false);
+
     const passwordValidation = (value) => {
         if(value.length < 6) return "Password must be at least 6 characters";
         if(!/[A-Z]/.test(value)) return "Password must have an uppercase letter";
@@ -9,6 +13,7 @@ const SignupFields = () => {
         if(!/[0-9]/.test(value)) return "Password must include a number";
         if(!/[$&+,:;=?@#|'<>.^*()%!-]/.test(value)) return "Password must include a special character";
     }
+    
     const form = useForm({
     mode: 'uncontrolled',
     initialValues: { email: '', password: '', retypePassword: '' },
@@ -18,8 +23,18 @@ const SignupFields = () => {
       retypePassword: matchesField('password', 'Passwords are not the same'),
     },
     });
+
+    const onSubmitSignup = (data) => {
+        console.log("Registering with:",data);
+        const success = registerUser(data.email,data.password);
+        if(!success) return; 
+        console.log("Register Success!");
+        form.reset();
+        setOpenAlert(true);
+    }
+
     return(
-        <form onSubmit={form.onSubmit(console.log)}>
+        <form onSubmit={form.onSubmit(onSubmitSignup)}>
         <Stack gap="lg">
             <TextInput label="Email" placeholder="Enter Your Email" withAsterisk key={form.key("email")} {...form.getInputProps("email")}/>
             <Group grow>
@@ -27,6 +42,7 @@ const SignupFields = () => {
                 <PasswordInput label="Re-type Password" placeholder="Enter Your Password Again!" withAsterisk key={form.key("retypePassword")} {...form.getInputProps("retypePassword")}/>
             </Group>
             <Button type="submit">Sign Up!</Button>
+            {openAlert && <Alert variant="filled" color="green" title="Account Created!" onClose={()=>setOpenAlert(false)} withCloseButton />}
         </Stack>
         </form>
     )
