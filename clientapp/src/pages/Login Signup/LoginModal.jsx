@@ -24,7 +24,7 @@ const LoginModal = (props) => {
 
     return(
         <Modal opened={opened} onClose={onClose} title="Authentication" centered transitionProps={{ transition: 'rotate-left' }} overlayProps={{ backgroundOpacity: 0.05, blur: 1.5,}} styles={modalStyle}>
-            {isReturningUser? <LoginFields /> : <SignupFields />}
+            {isReturningUser? <LoginFields onClose={onClose}/> : <SignupFields />}
         </Modal>
     )
 }

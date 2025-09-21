@@ -24,9 +24,9 @@ const SignupFields = () => {
     },
     });
 
-    const onSubmitSignup = (data) => {
+    const onSubmitSignup = async (data) => {
         console.log("Registering with:",data);
-        const success = registerUser(data.email,data.password);
+        const success = await registerUser(data.email,data.password);
         if(!success) return; 
         console.log("Register Success!");
         form.reset();

@@ -22,10 +22,8 @@ export const loginUser = async (email,password) => {
         body: JSON.stringify({
             email: email,
             password: password,
-            twoFactorCode: "string",
-            twoFactorRecoveryCode: "string",
         }),
     });
     if(!response.ok) throw Error("Error registering user");
-    return response.ok;
+    return response;
 }

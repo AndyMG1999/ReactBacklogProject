@@ -1,17 +1,30 @@
 import { Stack,TextInput,PasswordInput,Button,Checkbox } from "@mantine/core";
 import { useForm,isEmail,isNotEmpty } from "@mantine/form";
+import { loginUser } from "../../services/authServices";
 
-const LoginFields = () => {
+const LoginFields = (props) => {
+    const closeModal = props.onClose;
+
     const form = useForm({
     mode: 'uncontrolled',
-    initialValues: { email: '', password: '', retypePassword: '' },
+    initialValues: { email: '', password: '',},
     validate: {
         email: isEmail('Invalid email'),
         password: isNotEmpty('Required'),
     },
     });
+
+    const onSubmitLogin = async (data) => {
+        console.log("Logging with:",data);
+        const response = await loginUser(data.email,data.password);
+        if(!response.ok) return; 
+        console.log("Login Success!", response);
+        form.reset();
+        closeModal();
+    }
+
     return(
-        <form onSubmit={form.onSubmit(console.log)}>
+        <form onSubmit={form.onSubmit(onSubmitLogin)}>
         <Stack gap="lg">
             <TextInput label="Email" placeholder="Enter Your Email" withAsterisk key={form.key("email")} {...form.getInputProps("email")}/>
             <PasswordInput label="Password" placeholder="Enter Your Password" key={form.key("password")} {...form.getInputProps("password")}/>
