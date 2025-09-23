@@ -19,6 +19,8 @@ const LoginFields = (props) => {
         const response = await loginUser(data.email,data.password);
         if(!response.ok) return; 
         console.log("Login Success!", response);
+        const loginInfo = await response.json();
+        console.log("Login Info:", loginInfo);
         form.reset();
         closeModal();
     }
