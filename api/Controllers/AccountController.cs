@@ -1,10 +1,12 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using api.Contexts;
 using api.Dtos;
 using api.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
@@ -41,9 +43,10 @@ namespace api.Controllers
             if (user == null) return Unauthorized("Invalid Username or Password");
 
             var result = await _signInManager.PasswordSignInAsync(user, loginUserDto.Password, false, false);
+
             if (!result.Succeeded) return Unauthorized("Invalid Username or Password");
 
-            UserInfoDto userInfo = new UserInfoDto { Email = user.Email, UserName = user.UserName, PhoneNumber = user.PhoneNumber, EmailConfirmed = user.EmailConfirmed };
+            UserInfoDto userInfo = new UserInfoDto {UserId = user.Id ,Email = user.Email, UserName = user.UserName, PhoneNumber = user.PhoneNumber, EmailConfirmed = user.EmailConfirmed };
             return Ok(userInfo);
         }
 
@@ -52,6 +55,23 @@ namespace api.Controllers
         {
             await _signInManager.SignOutAsync();
             return Ok();
+        }
+
+        [Authorize]
+        [HttpGet("getUserInfo")]
+        public async Task<IActionResult> GetUserInfo()
+        {
+            string? userEmail = User.FindFirst(ClaimTypes.Email)?.Value;
+            if (userEmail == null) return BadRequest();
+
+            AppUser? user = await _userManager.FindByEmailAsync(userEmail);
+            if (user == null) return BadRequest();
+
+            string? userId = user.Id;
+            string? userName = user.UserName;
+            string? phoneNumber = user.PhoneNumber;
+            bool emailConfirmed = user.EmailConfirmed;
+            return Ok(new UserInfoDto { UserId=userId, UserName=userName, Email=userEmail, PhoneNumber=phoneNumber, EmailConfirmed=emailConfirmed});
         }
     }
 }

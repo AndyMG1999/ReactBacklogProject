@@ -40,8 +40,8 @@ const SignupFields = () => {
             <TextInput label="Email" placeholder="Enter Your Email" withAsterisk key={form.key("email")} {...form.getInputProps("email")}/>
             <TextInput label="Username" placeholder="Enter Your Username" withAsterisk key={form.key("userName")} {...form.getInputProps("userName")}/>
             <Group grow>
-                <PasswordInput label="Password" placeholder="Enter Your Username" withAsterisk key={form.key("password")} {...form.getInputProps("password")}/>
-                <PasswordInput label="Re-type Password" placeholder="Enter Your Password Again!" withAsterisk key={form.key("retypePassword")} {...form.getInputProps("retypePassword")}/>
+                <PasswordInput label="Password" placeholder="Enter Your Password" withAsterisk key={form.key("password")} {...form.getInputProps("password")}/>
+                <PasswordInput label="Re-type Password" placeholder="Re-Type Password" withAsterisk key={form.key("retypePassword")} {...form.getInputProps("retypePassword")}/>
             </Group>
             <Button type="submit">Sign Up!</Button>
             {openAlert && <Alert variant="filled" color="green" title="Account Created!" onClose={()=>setOpenAlert(false)} withCloseButton />}
