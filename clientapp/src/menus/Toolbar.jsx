@@ -26,6 +26,10 @@ const Toolbar = () => {
         position: "relative",
     };
 
+    const openLink = (link)=>{
+        window.open(link, '_blank', 'noopener,noreferrer');
+    }
+
     // Use Effect for checking if Scroll is on top of screen
     useEffect(() => {
         const handleScroll = () => {
@@ -49,7 +53,7 @@ const Toolbar = () => {
                 </Group>
 
                 <Group>
-                    <ActionIcon size={"xl"} radius="xl"><FaGithub size={iconSize}/></ActionIcon>
+                    <ActionIcon size={"xl"} radius="xl" onClick={()=>{openLink("https://github.com/AndyMG1999")}}><FaGithub size={iconSize}/></ActionIcon>
                     <ActionIcon size={"xl"} radius="xl"><FaInstagram size={iconSize}/></ActionIcon>
                     <ActionIcon size={"xl"} radius="xl"><FaDiscord size={iconSize}/></ActionIcon>
                     <Button radius={"lg"} color='cozyGreen' onClick={()=>{setOpenLoginModal(true); setIsReturningUser(true);}}>Log In</Button>
