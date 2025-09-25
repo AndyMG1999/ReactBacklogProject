@@ -28,3 +28,12 @@ export const loginUser = async (email,password) => {
     if(!response.ok) throw Error("Error registering user");
     return response;
 }
+
+export const getUserInfo = async () => {
+    const response = await fetch("./api/account/getUserInfo",{
+        'method': 'GET',
+    });
+    if(!response.ok) throw Error("Error getting user info");
+    const data = await response.json();
+    return data;
+}

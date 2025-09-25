@@ -1,5 +1,4 @@
-import { Group, ActionIcon, Button, Title, Box, Container, Divider, Text,Avatar } from '@mantine/core';
-import { alpha, } from '@mantine/core';
+import { Group, ActionIcon, Title, Container, } from '@mantine/core';
 import { FaGithub,FaDiscord,FaInstagram } from "react-icons/fa";
 import { MdMenu } from "react-icons/md";
 import { useState,useEffect } from 'react';
@@ -7,12 +6,14 @@ import LoginModal from '../pages/Login Signup/LoginModal';
 import SidebarModal from './Sidebar/SidebarModal';
 import AccountAvatarContainer from './Toolbar Components/AccountAvatarContainer';
 import LoginSignupContainer from './Toolbar Components/loginSignupContainer';
+import { getUserInfo } from '../services/authServices';
 
 const Toolbar = () => {
     const [openLoginModal, setOpenLoginModal] = useState(false);
     const [openSidebarModal, setOpenSidebarModal] = useState(false);
-    const [isReturningUser, setIsReturningUser] = useState(false);
-    const [isLoggedIn, setIsLoggedIn] = useState(true);
+    const [openLoginOrSignup, setOpenLoginOrSignup] = useState("login");
+    const [userInfo, setUserInfo] = useState([]);
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [isAtTop, setIsAtTop] = useState(true);
 
     const iconSize = "2em"
@@ -33,8 +34,7 @@ const Toolbar = () => {
         window.open(link, '_blank', 'noopener,noreferrer');
     }
 
-    // Use Effect for checking if Scroll is on top of screen
-    useEffect(() => {
+    const addScrollAtTopEventListener = () => {
         const handleScroll = () => {
         setIsAtTop(window.scrollY < 250);
         };
@@ -44,6 +44,19 @@ const Toolbar = () => {
         return () => {
         window.removeEventListener('scroll', handleScroll);
         };
+    }
+
+    const getCurrentUserInfo = async () => {
+        const userData = await getUserInfo();
+        if(!userData) return;
+        setUserInfo(userData);
+        setIsLoggedIn(true);
+    }
+
+    // Use Effect for checking if Scroll is on top of screen
+    useEffect(() => {
+        getCurrentUserInfo();
+        addScrollAtTopEventListener();    
     }, []);
 
     return(
@@ -57,15 +70,15 @@ const Toolbar = () => {
 
                 <Group>
                     {isLoggedIn?
-                    <AccountAvatarContainer />
+                    <AccountAvatarContainer userInfo={userInfo}/>
                     :
-                    <LoginSignupContainer setOpenLoginModal={setOpenLoginModal} setIsReturningUser={setIsReturningUser}/>}
+                    <LoginSignupContainer setOpenLoginModal={setOpenLoginModal} setOpenLoginOrSignup={setOpenLoginOrSignup}/>}
                     <ActionIcon size={"xl"} radius="xl" onClick={()=>{openLink("https://github.com/AndyMG1999")}}><FaGithub size={iconSize}/></ActionIcon>
                     <ActionIcon size={"xl"} radius="xl"><FaInstagram size={iconSize}/></ActionIcon>
                     <ActionIcon size={"xl"} radius="xl"><FaDiscord size={iconSize}/></ActionIcon>
                 </Group>
             </Group>
-            <LoginModal opened={openLoginModal} onClose={()=>{setOpenLoginModal(false);}} isReturningUser={isReturningUser}/>
+            <LoginModal opened={openLoginModal} onClose={()=>{setOpenLoginModal(false);}} openLoginOrSignup={openLoginOrSignup}/>
         </Container>
     )
 }

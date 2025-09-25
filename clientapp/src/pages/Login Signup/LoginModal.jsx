@@ -5,7 +5,7 @@ import SignupFields from './SignupFields';
 const LoginModal = (props) => {
     const opened = props.opened;
     const onClose = props.onClose;
-    const isReturningUser = props.isReturningUser;
+    const openLoginOrSignup = props.openLoginOrSignup;
 
     const modalStyle = {
         header: { 
@@ -24,7 +24,7 @@ const LoginModal = (props) => {
 
     return(
         <Modal opened={opened} onClose={onClose} title="Authentication" centered transitionProps={{ transition: 'rotate-left' }} overlayProps={{ backgroundOpacity: 0.05, blur: 1.5,}} styles={modalStyle}>
-            {isReturningUser? <LoginFields onClose={onClose}/> : <SignupFields />}
+            {openLoginOrSignup == "login"? <LoginFields onClose={onClose}/> : <SignupFields />}
         </Modal>
     )
 }
