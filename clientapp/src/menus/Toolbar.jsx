@@ -1,15 +1,18 @@
-import { Group, ActionIcon, Button, Title, Box, Container, Divider } from '@mantine/core';
+import { Group, ActionIcon, Button, Title, Box, Container, Divider, Text,Avatar } from '@mantine/core';
 import { alpha, } from '@mantine/core';
 import { FaGithub,FaDiscord,FaInstagram } from "react-icons/fa";
 import { MdMenu } from "react-icons/md";
 import { useState,useEffect } from 'react';
 import LoginModal from '../pages/Login Signup/LoginModal';
 import SidebarModal from './Sidebar/SidebarModal';
+import AccountAvatarContainer from './Toolbar Components/AccountAvatarContainer';
+import LoginSignupContainer from './Toolbar Components/loginSignupContainer';
 
 const Toolbar = () => {
     const [openLoginModal, setOpenLoginModal] = useState(false);
     const [openSidebarModal, setOpenSidebarModal] = useState(false);
     const [isReturningUser, setIsReturningUser] = useState(false);
+    const [isLoggedIn, setIsLoggedIn] = useState(true);
     const [isAtTop, setIsAtTop] = useState(true);
 
     const iconSize = "2em"
@@ -44,7 +47,7 @@ const Toolbar = () => {
     }, []);
 
     return(
-        <Container fluid display={"flex"} pos={"sticky"} top={0} w={isAtTop?"100%":"90%"} h={"7em"} mt={!isAtTop&&"xs"} style={toolbarStyle}>
+        <Container fluid display={"flex"} pos={"sticky"} top={0} w={isAtTop?"100%":"85%"} h={"7em"} mt={!isAtTop&&"xs"} style={toolbarStyle}>
             <Group justify="space-between" preventGrowOverflow={false} style={{ width: '100%' }}>
                 <Group>
                     <SidebarModal opened={openSidebarModal} onClose={()=>setOpenSidebarModal(false)}/>
@@ -53,11 +56,13 @@ const Toolbar = () => {
                 </Group>
 
                 <Group>
+                    {isLoggedIn?
+                    <AccountAvatarContainer />
+                    :
+                    <LoginSignupContainer setOpenLoginModal={setOpenLoginModal} setIsReturningUser={setIsReturningUser}/>}
                     <ActionIcon size={"xl"} radius="xl" onClick={()=>{openLink("https://github.com/AndyMG1999")}}><FaGithub size={iconSize}/></ActionIcon>
                     <ActionIcon size={"xl"} radius="xl"><FaInstagram size={iconSize}/></ActionIcon>
                     <ActionIcon size={"xl"} radius="xl"><FaDiscord size={iconSize}/></ActionIcon>
-                    <Button radius={"lg"} color='cozyGreen' onClick={()=>{setOpenLoginModal(true); setIsReturningUser(true);}}>Log In</Button>
-                    <Button radius={"lg"} color='cozyBrown' onClick={()=>{setOpenLoginModal(true); setIsReturningUser(false);}}>Sign up</Button>
                 </Group>
             </Group>
             <LoginModal opened={openLoginModal} onClose={()=>{setOpenLoginModal(false);}} isReturningUser={isReturningUser}/>

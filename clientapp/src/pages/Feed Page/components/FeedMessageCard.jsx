@@ -54,7 +54,7 @@ const FeedMessageCard = (props) => {
                 </Group>
                 
                 <Card.Section inheritPadding align="center">
-                    <Group w={{xs:"100%", lg: "75%"}} p={"xs"} m={{xs:"xs", s:"lg"}} bdrs={"lg"} align="center" bd="2px solid white">
+                    <Group w={{xs:"100%", lg: "85%"}} p={"xs"} m={{xs:"xs", s:"lg"}} bdrs={"lg"} align="center" bd="2px solid white">
                         <SoundCloudPlayer />
                     </Group>
                 </Card.Section>
