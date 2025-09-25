@@ -1,12 +1,13 @@
+import { useState,useEffect,useContext } from 'react';
 import { Group, ActionIcon, Title, Container, } from '@mantine/core';
 import { FaGithub,FaDiscord,FaInstagram } from "react-icons/fa";
 import { MdMenu } from "react-icons/md";
-import { useState,useEffect } from 'react';
 import LoginModal from '../pages/Login Signup/LoginModal';
 import SidebarModal from './Sidebar/SidebarModal';
 import AccountAvatarContainer from './Toolbar Components/AccountAvatarContainer';
 import LoginSignupContainer from './Toolbar Components/loginSignupContainer';
 import { getUserInfo } from '../services/authServices';
+import { Context } from '../contexts/ApplicationContext';
 
 const Toolbar = () => {
     const [openLoginModal, setOpenLoginModal] = useState(false);
@@ -14,7 +15,8 @@ const Toolbar = () => {
     const [openLoginOrSignup, setOpenLoginOrSignup] = useState("login");
     const [userInfo, setUserInfo] = useState([]);
     const [isLoggedIn, setIsLoggedIn] = useState(false);
-    const [isAtTop, setIsAtTop] = useState(true);
+
+    const {isAtTop,setIsAtTop} = useContext(Context);
 
     const iconSize = "2em"
     const toolbarStyle = {
