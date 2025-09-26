@@ -7,6 +7,7 @@ import SidebarModal from './Sidebar/SidebarModal';
 import AccountAvatarContainer from './Toolbar Components/AccountAvatarContainer';
 import LoginSignupContainer from './Toolbar Components/loginSignupContainer';
 import { AppContext } from '../contexts/ApplicationContext';
+import ToolbarLogo from './Toolbar Components/ToolbarLogo';
 
 const Toolbar = () => {
     const [openLoginModal, setOpenLoginModal] = useState(false);
@@ -57,7 +58,7 @@ const Toolbar = () => {
                 <Group>
                     <SidebarModal opened={openSidebarModal} onClose={()=>setOpenSidebarModal(false)}/>
                     <ActionIcon color="white" variant="subtle" size={"xl"} onClick={()=>setOpenSidebarModal(true)}><MdMenu size={iconSize}/></ActionIcon>
-                    <Title order={1} fz={"3em"}>Rainy Day</Title>
+                    <ToolbarLogo />
                 </Group>
 
                 <Group>
