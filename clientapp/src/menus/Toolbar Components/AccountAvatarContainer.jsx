@@ -1,6 +1,11 @@
-import { Avatar, Menu, Text } from "@mantine/core"
+import { useContext } from "react";
+import { Avatar, Menu, Text } from "@mantine/core";
+import { AppContext } from "../../contexts/ApplicationContext";
 
 const AccountAvatarContainer = () => {
+    const {userInfo} = useContext(AppContext);
+    const userName = userInfo.userName;
+
     const menuStyles = {
         label: {color: "#666666"},
         dropdown: {
@@ -16,10 +21,10 @@ const AccountAvatarContainer = () => {
     return(
     <Menu withArrow offset={-5} radius="lg" width="15em" styles={menuStyles}>
         <Menu.Target>
-            <Avatar color='cozyGreen' name='Username' size="3em" component="button" bg={"#00000025"}/>
+            <Avatar color='cozyGreen' name={userName} size="3em" component="button" bg={"#00000025"}/>
         </Menu.Target>
         <Menu.Dropdown>
-            <Menu.Label><Text size="xl" fw="bold">Username</Text></Menu.Label>
+            <Menu.Label><Text size="xl" fw="bold">{userName}</Text></Menu.Label>
             <Menu.Divider/>
             <Menu.Item>Account Profile</Menu.Item>
             <Menu.Item>My Bottles</Menu.Item>

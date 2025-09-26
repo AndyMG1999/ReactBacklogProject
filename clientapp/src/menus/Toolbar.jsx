@@ -6,17 +6,15 @@ import LoginModal from '../pages/Login Signup/LoginModal';
 import SidebarModal from './Sidebar/SidebarModal';
 import AccountAvatarContainer from './Toolbar Components/AccountAvatarContainer';
 import LoginSignupContainer from './Toolbar Components/loginSignupContainer';
-import { getUserInfo } from '../services/authServices';
-import { Context } from '../contexts/ApplicationContext';
+import { AppContext } from '../contexts/ApplicationContext';
 
 const Toolbar = () => {
     const [openLoginModal, setOpenLoginModal] = useState(false);
     const [openSidebarModal, setOpenSidebarModal] = useState(false);
     const [openLoginOrSignup, setOpenLoginOrSignup] = useState("login");
-    const [userInfo, setUserInfo] = useState([]);
     const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-    const {isAtTop,setIsAtTop} = useContext(Context);
+    const {isAtTop,setIsAtTop,userInfo} = useContext(AppContext);
 
     const iconSize = "2em"
     const toolbarStyle = {
@@ -48,16 +46,8 @@ const Toolbar = () => {
         };
     }
 
-    const getCurrentUserInfo = async () => {
-        const userData = await getUserInfo();
-        if(!userData) return;
-        setUserInfo(userData);
-        setIsLoggedIn(true);
-    }
-
     // Use Effect for checking if Scroll is on top of screen
     useEffect(() => {
-        getCurrentUserInfo();
         addScrollAtTopEventListener();    
     }, []);
 
@@ -71,8 +61,8 @@ const Toolbar = () => {
                 </Group>
 
                 <Group>
-                    {isLoggedIn?
-                    <AccountAvatarContainer userInfo={userInfo}/>
+                    {userInfo?
+                    <AccountAvatarContainer/>
                     :
                     <LoginSignupContainer setOpenLoginModal={setOpenLoginModal} setOpenLoginOrSignup={setOpenLoginOrSignup}/>}
                     <ActionIcon size={"xl"} radius="xl" onClick={()=>{openLink("https://github.com/AndyMG1999")}}><FaGithub size={iconSize}/></ActionIcon>

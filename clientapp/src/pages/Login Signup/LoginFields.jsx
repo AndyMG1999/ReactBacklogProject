@@ -1,9 +1,13 @@
+import { useContext } from "react";
 import { Stack,TextInput,PasswordInput,Button,Checkbox } from "@mantine/core";
 import { useForm,isEmail,isNotEmpty } from "@mantine/form";
-import { loginUser } from "../../services/authServices";
+import { loginUser} from "../../services/authServices";
+import { AppContext } from "../../contexts/ApplicationContext";
 
 const LoginFields = (props) => {
     const closeModal = props.onClose;
+
+    const {setUserInfo} = useContext(AppContext)
 
     const form = useForm({
     mode: 'uncontrolled',
@@ -21,6 +25,7 @@ const LoginFields = (props) => {
         console.log("Login Success!", response);
         const loginInfo = await response.json();
         console.log("Login Info:", loginInfo);
+        setUserInfo(loginInfo);
         form.reset();
         closeModal();
     }

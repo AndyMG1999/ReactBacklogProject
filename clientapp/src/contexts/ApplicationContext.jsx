@@ -1,14 +1,14 @@
 import { useState,createContext } from "react";
 
-export const Context = createContext({
-    userInfo: {},
+export const AppContext = createContext({
+    userInfo: null,
     setUserInfo: () => {},
     isAtTop: false,
     setIsAtTop: () => {},
 });
 
 const ApplicationContext = (props) => {
-    const [userInfo, setUserInfo] = useState({});
+    const [userInfo, setUserInfo] = useState(null);
     const [isAtTop, setIsAtTop] = useState(true);
     
     const contextValues = {
@@ -18,9 +18,9 @@ const ApplicationContext = (props) => {
         setIsAtTop: (value) => setIsAtTop(value),
     }
     return(
-        <Context.Provider value={contextValues}>
+        <AppContext.Provider value={contextValues}>
             {props.children}
-        </Context.Provider>
+        </AppContext.Provider>
     )
 }
 

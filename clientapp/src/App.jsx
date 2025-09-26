@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react'
-import { Text, Box, Button, Flex, ScrollArea, useMantineTheme } from '@mantine/core';
+import { useState, useEffect, useContext } from 'react'
+import { Flex, useMantineTheme } from '@mantine/core';
 import Toolbar from './menus/Toolbar';
 import LandingPage from './pages/Landing Page/LandingPage';
 import MessagesPage from './pages/Messages Page/MessagesPage';
@@ -7,13 +7,23 @@ import FeedPage from './pages/Feed Page/FeedPage';
 import Snowfall from 'react-snowfall';
 import { Routes,Route } from 'react-router';
 import * as signalR from '@microsoft/signalr';
-import ApplicationContext from './contexts/ApplicationContext';
+import { AppContext } from './contexts/ApplicationContext';
+import { getUserInfo } from './services/authServices';
 
 function App() {
   let connection;
   const [weatherData, setWeatherData] = useState(null);
   const theme = useMantineTheme();
 
+  const {setUserInfo} = useContext(AppContext);
+  
+  const getCurrentUserInfo = async () => {
+    const userData = await getUserInfo();
+    if(!userData) return;
+    console.log("Already signed in! ",userData);
+    setUserInfo(userData);
+  }
+  
   const fetchReponse = async () => {
     const response = await fetch(`./api/weatherforecast/`);
     console.log("response: ",response);
@@ -52,6 +62,7 @@ function App() {
   }
 
   useEffect(() => {
+    getCurrentUserInfo();
     fetchReponse();
     fetchDummyData();
     setUpConnection();
@@ -62,17 +73,15 @@ function App() {
   }
 
   return (
-    <ApplicationContext>
-      <Flex direction={"column"} style={backgroundStyle}>
-        <Snowfall color='#046896ff' snowflakeCount={45} wind={[0,0]} radius={[0.5,3]} speed={[7.5,10]}/>
-        <Toolbar/>
-        <Routes>
-          <Route path='/' element={<LandingPage />} />
-          <Route path='/shore' element={<MessagesPage />} />
-          <Route path='/beach' element={<FeedPage />} />
-        </Routes>
-      </Flex>
-    </ApplicationContext>
+  <Flex direction={"column"} style={backgroundStyle}>
+    <Snowfall color='#046896ff' snowflakeCount={45} wind={[0,0]} radius={[0.5,3]} speed={[7.5,10]}/>
+    <Toolbar/>
+    <Routes>
+      <Route path='/' element={<LandingPage />} />
+      <Route path='/shore' element={<MessagesPage />} />
+      <Route path='/beach' element={<FeedPage />} />
+    </Routes>
+  </Flex>
   )
 }
 
