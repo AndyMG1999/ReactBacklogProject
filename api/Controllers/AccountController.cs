@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using System.Net.Mail;
 using api.Contexts;
 using api.Dtos;
 using api.Models;
@@ -52,7 +53,7 @@ namespace api.Controllers
 
             if (!result.Succeeded) return Unauthorized("Invalid Username or Password");
 
-            UserInfoDto userInfo = new UserInfoDto {UserId = user.Id ,Email = user.Email, UserName = user.UserName, PhoneNumber = user.PhoneNumber, EmailConfirmed = user.EmailConfirmed };
+            UserInfoDto userInfo = new UserInfoDto { UserId = user.Id, Email = user.Email, UserName = user.UserName, PhoneNumber = user.PhoneNumber, EmailConfirmed = user.EmailConfirmed };
             return Ok(userInfo);
         }
 
@@ -77,7 +78,22 @@ namespace api.Controllers
             string? userName = user.UserName;
             string? phoneNumber = user.PhoneNumber;
             bool emailConfirmed = user.EmailConfirmed;
-            return Ok(new UserInfoDto { UserId=userId, UserName=userName, Email=userEmail, PhoneNumber=phoneNumber, EmailConfirmed=emailConfirmed});
+            return Ok(new UserInfoDto { UserId = userId, UserName = userName, Email = userEmail, PhoneNumber = phoneNumber, EmailConfirmed = emailConfirmed });
+        }
+
+        [HttpGet("testEmail")]
+        public IActionResult TestEmail()
+        {
+            SmtpClient smtpClient = new SmtpClient("smtp.gmail.com", 587)
+            {
+                Credentials = new System.Net.NetworkCredential("gonzalezandy212@gmail.com", "ucpi vwtw teon nhfo"),
+                EnableSsl = true,
+                DeliveryMethod = SmtpDeliveryMethod.Network,
+                UseDefaultCredentials = false
+            };
+
+            smtpClient.Send("gonzalezandy212@gmail.com", "gonzalezandy21@gmail.com", "Test Email", "Hi Andy, This is a test email! Hi Grismely! I'm guessing Andy is showing you this too.👁️");
+            return Ok();
         }
     }
 }

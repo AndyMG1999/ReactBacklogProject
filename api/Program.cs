@@ -94,7 +94,7 @@ app.MapControllers();
 app.MapHub<TestHub>("/testhub");
 // Map Identity Models Here
 // Replace "IdentityUser" With Custom Identity Model When Ready
-app.MapIdentityApi<AppUser>();
+//app.MapIdentityApi<AppUser>();
 app.Run();
 
 record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
