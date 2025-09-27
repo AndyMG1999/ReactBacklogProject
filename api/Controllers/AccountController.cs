@@ -30,6 +30,12 @@ namespace api.Controllers
         [HttpPost("register")]
         public async Task<IActionResult> RegisterUser(RegisterUserDto registerUserDto)
         {
+            // Checks if email already exists
+            bool emailAlreadyExists = await _userManager.FindByEmailAsync(registerUserDto.Email) != null;
+            bool usernameAlreadyExists = await _userManager.FindByNameAsync(registerUserDto.UserName) != null;
+            if (emailAlreadyExists) return Unauthorized("Email already exists");
+            if (usernameAlreadyExists) return Unauthorized("Username already exists");
+
             AppUser newUser = new AppUser { UserName = registerUserDto.UserName, Email = registerUserDto.Email };
             var createdUser = await _userManager.CreateAsync(newUser, registerUserDto.Password);
             if (createdUser.Succeeded) return Ok();

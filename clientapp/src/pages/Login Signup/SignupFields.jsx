@@ -5,7 +5,7 @@ import { useState } from "react";
 
 const SignupFields = () => {
     const [openSuccessAlert, setOpenSuccessAlert] = useState(false);
-    const [openErrorAlert, setOpenErrorAlert] = useState(true);
+    const [openErrorAlert, setOpenErrorAlert] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
 
     const passwordValidation = (value) => {
@@ -33,9 +33,12 @@ const SignupFields = () => {
         console.log("Registering with:",data);
         const response = await registerUser(data.email,data.userName,data.password);
         
-        if(!response.ok) setErrorMessage(response.statusText);
-        if(!response.ok) setOpenErrorAlert(true);
-        if(!response.ok) return;
+        if(!response.ok) {
+            const error = await response.text();
+            setErrorMessage(error);
+            setOpenErrorAlert(true);
+            return;
+        }
         
         console.log("Register Success!");
         form.reset();
@@ -52,8 +55,8 @@ const SignupFields = () => {
                 <PasswordInput label="Re-type Password" placeholder="Re-Type Password" withAsterisk key={form.key("retypePassword")} {...form.getInputProps("retypePassword")}/>
             </Group>
             <Button type="submit">Sign Up!</Button>
-            {openSuccessAlert && <Alert variant="filled" color="green" title="Account Created!" onClose={()=>setOpenAlert(false)} withCloseButton />}
-            {openErrorAlert && <Alert variant="filled" color="red" title={errorMessage??"Error Registering Account"} onClose={()=>setOpenAlert(false)} withCloseButton />}
+            {openSuccessAlert && <Alert variant="filled" color="green" title="Account Created!" onClose={()=>setOpenSuccessAlert(false)} withCloseButton />}
+            {openErrorAlert && <Alert variant="filled" color="red" title={errorMessage??"Error Registering Account"} onClose={()=>setOpenErrorAlert(false)} withCloseButton />}
         </Stack>
         </form>
     )
