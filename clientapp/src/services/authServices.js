@@ -10,8 +10,7 @@ export const registerUser = async (email,userName,password) => {
             password: password,
         }),
     });
-    if(!response.ok) throw Error("Error registering user");
-    return response.ok;
+    return response;
 }
 
 export const loginUser = async (email,password) => {
@@ -25,7 +24,6 @@ export const loginUser = async (email,password) => {
             password: password,
         }),
     });
-    if(!response.ok) throw Error("Error registering user");
     return response;
 }
 

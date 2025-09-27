@@ -4,7 +4,9 @@ import { registerUser } from "../../services/authServices";
 import { useState } from "react";
 
 const SignupFields = () => {
-    const [openAlert, setOpenAlert] = useState(false);
+    const [openSuccessAlert, setOpenSuccessAlert] = useState(false);
+    const [openErrorAlert, setOpenErrorAlert] = useState(true);
+    const [errorMessage, setErrorMessage] = useState("");
 
     const passwordValidation = (value) => {
         if(value.length < 6) return "Password must be at least 6 characters";
@@ -26,12 +28,18 @@ const SignupFields = () => {
     });
 
     const onSubmitSignup = async (data) => {
+        setOpenErrorAlert(false);
+        setOpenSuccessAlert(false);
         console.log("Registering with:",data);
-        const success = await registerUser(data.email,data.userName,data.password);
-        if(!success) return; 
+        const response = await registerUser(data.email,data.userName,data.password);
+        
+        if(!response.ok) setErrorMessage(response.statusText);
+        if(!response.ok) setOpenErrorAlert(true);
+        if(!response.ok) return;
+        
         console.log("Register Success!");
         form.reset();
-        setOpenAlert(true);
+        setOpenSuccessAlert(true);
     }
 
     return(
@@ -44,7 +52,8 @@ const SignupFields = () => {
                 <PasswordInput label="Re-type Password" placeholder="Re-Type Password" withAsterisk key={form.key("retypePassword")} {...form.getInputProps("retypePassword")}/>
             </Group>
             <Button type="submit">Sign Up!</Button>
-            {openAlert && <Alert variant="filled" color="green" title="Account Created!" onClose={()=>setOpenAlert(false)} withCloseButton />}
+            {openSuccessAlert && <Alert variant="filled" color="green" title="Account Created!" onClose={()=>setOpenAlert(false)} withCloseButton />}
+            {openErrorAlert && <Alert variant="filled" color="red" title={errorMessage??"Error Registering Account"} onClose={()=>setOpenAlert(false)} withCloseButton />}
         </Stack>
         </form>
     )

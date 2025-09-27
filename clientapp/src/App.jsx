@@ -27,6 +27,7 @@ function App() {
   const fetchReponse = async () => {
     const response = await fetch(`./api/weatherforecast/`);
     console.log("response: ",response);
+    if(!response.ok) return;
     const json = await response.json();
     console.log("json:", json);
     setWeatherData(json);
@@ -35,6 +36,7 @@ function App() {
   const fetchDummyData = async () => {
     const response = await fetch(`./api/post/GetAll`);
     console.log("API Reponse:",response);
+    if(!response.ok) return;
     const data = await response.json();
     console.log("API Data:",data);
   }
