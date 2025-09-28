@@ -10,6 +10,8 @@ using api.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using api.Services;
+using api.Interfaces;
 
 namespace api.Controllers
 {
@@ -18,14 +20,16 @@ namespace api.Controllers
     public class AccountController : Controller
     {
         DatabaseContext _context;
+        IEmailServices _emailServices;
         UserManager<AppUser> _userManager;
         SignInManager<AppUser> _signInManager;
 
-        public AccountController(DatabaseContext databaseContext, UserManager<AppUser> userManager, SignInManager<AppUser> signInManager)
+        public AccountController(DatabaseContext databaseContext, UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, IEmailServices emailServices)
         {
             _context = databaseContext;
             _userManager = userManager;
             _signInManager = signInManager;
+            _emailServices = emailServices;
         }
 
         [HttpPost("register")]
@@ -81,18 +85,21 @@ namespace api.Controllers
             return Ok(new UserInfoDto { UserId = userId, UserName = userName, Email = userEmail, PhoneNumber = phoneNumber, EmailConfirmed = emailConfirmed });
         }
 
-        [HttpGet("testEmail")]
-        public IActionResult TestEmail()
+        [HttpGet("sendEmailCode/{recepient}")]
+        public IActionResult SendEmailCode(string recepient)
         {
-            SmtpClient smtpClient = new SmtpClient("smtp.gmail.com", 587)
-            {
-                Credentials = new System.Net.NetworkCredential("gonzalezandy212@gmail.com", "ucpi vwtw teon nhfo"),
-                EnableSsl = true,
-                DeliveryMethod = SmtpDeliveryMethod.Network,
-                UseDefaultCredentials = false
-            };
+            // Insert logic to create email confirm code and
+            // use email services to confirm email
+            _emailServices.SendConfirmEmail(recepient, "2SztHzEKytZQ");
+            return Ok();
+        }
 
-            smtpClient.Send("gonzalezandy212@gmail.com", "gonzalezandy21@gmail.com", "Test Email", "Hi Andy, This is a test email! Hi Grismely! I'm guessing Andy is showing you this too.👁️");
+        [HttpGet("sendResetCode/{recepient}")]
+        public IActionResult SendResetCode(string recepient)
+        {
+            // Insert logic to create email confirm code and
+            // use email services to confirm email
+            _emailServices.SendResetPasswordEmail(recepient, "2SztHzEKytZQ");
             return Ok();
         }
     }

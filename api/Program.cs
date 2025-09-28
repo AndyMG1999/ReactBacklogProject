@@ -4,6 +4,8 @@ using Microsoft.OpenApi.Models;
 using api.Contexts;
 using api.Hubs;
 using Microsoft.AspNetCore.Identity;
+using api.Interfaces;
+using api.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -32,6 +34,8 @@ builder.Services.AddDbContext<DatabaseContext>(options =>
     options.UseInMemoryDatabase("inMemoryDb"));
 builder.Services.AddIdentityApiEndpoints<AppUser>()
     .AddEntityFrameworkStores<DatabaseContext>();
+
+builder.Services.AddScoped<IEmailServices, EmailServices>();
 
 var app = builder.Build();
 
