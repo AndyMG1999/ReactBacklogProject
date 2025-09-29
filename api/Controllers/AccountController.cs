@@ -90,16 +90,22 @@ namespace api.Controllers
         {
             // Insert logic to create email confirm code and
             // use email services to confirm email
-            _emailServices.SendConfirmEmail(recepient, "2SztHzEKytZQ");
+            _emailServices.SendConfirmEmail(recepient, "USERNAME","2SztHzEKytZQ");
             return Ok();
         }
 
         [HttpGet("sendResetCode/{recepient}")]
-        public IActionResult SendResetCode(string recepient)
+        public async Task<IActionResult> SendResetCode(string recepient)
         {
+            AppUser? user = await _userManager.FindByEmailAsync(recepient);
+            if (user == null) return BadRequest();
+            if (user.UserName == null) return BadRequest();
+
+            string userName = user.UserName;
+            string passwordCode = await _userManager.GeneratePasswordResetTokenAsync(user);
             // Insert logic to create email confirm code and
             // use email services to confirm email
-            _emailServices.SendResetPasswordEmail(recepient, "2SztHzEKytZQ");
+            _emailServices.SendResetPasswordEmail(recepient, userName, passwordCode);
             return Ok();
         }
     }

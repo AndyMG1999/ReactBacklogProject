@@ -14,7 +14,7 @@ namespace api.Services
         public const string smtpEmail = "andy.mailbot.noreply@gmail.com";
         public const string smtpPassword = "sibo wfwt raew jlau";
 
-        public void SendConfirmEmail(string recipient, string emailConfirmCode)
+        public void SendConfirmEmail(string recipient, string userName, string emailConfirmCode)
         {
             SmtpClient smtpClient = new SmtpClient("smtp.gmail.com", 587)
             {
@@ -29,7 +29,7 @@ namespace api.Services
             mail.To.Add(recipient);
             mail.Subject = "bottles.io - Confirm Your Account!";
             mail.Body = EmailBodies.confirmEmailBody;
-            mail.Body = mail.Body.Replace("{recipient}", recipient).Replace("emailConfirmCode", emailConfirmCode);
+            mail.Body = mail.Body.Replace("{recipient}", userName).Replace("emailConfirmCode", emailConfirmCode);
 
 
             smtpClient.Send(mail);
@@ -48,7 +48,7 @@ namespace api.Services
             smtpClient.Send(smtpEmail, recipient, subject, body);
         }
 
-        public void SendResetPasswordEmail(string recipient, string passwordRecoveryCode)
+        public void SendResetPasswordEmail(string recipient, string userName, string passwordRecoveryCode)
         {
             SmtpClient smtpClient = new SmtpClient("smtp.gmail.com", 587)
             {
@@ -63,7 +63,7 @@ namespace api.Services
             mail.To.Add(recipient);
             mail.Subject = "bottles.io - Password Recovery";
             mail.Body = EmailBodies.passwordRecoveryBody;
-            mail.Body = mail.Body.Replace("{recipient}", recipient).Replace("passwordRecoveryCode", passwordRecoveryCode);
+            mail.Body = mail.Body.Replace("{recipient}", userName).Replace("passwordRecoveryCode", passwordRecoveryCode);
 
             smtpClient.Send(mail);
         }

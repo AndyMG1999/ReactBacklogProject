@@ -9,7 +9,7 @@ namespace api.Interfaces
     public interface IEmailServices
     {
         public void SendCustomEmail(string recipient, string subject, string body);
-        public void SendConfirmEmail(string recipient, string emailConfirmCode);
-        public void SendResetPasswordEmail(string recipient, string passwordRecoveryCode);
+        public void SendConfirmEmail(string recipient, string userName, string emailConfirmCode);
+        public void SendResetPasswordEmail(string recipient, string userName, string passwordRecoveryCode);
     }
 }
