@@ -14,8 +14,9 @@ namespace api.Models
         public DateTime? LastEdit { get; set; } = DateTime.Now;
 
         // References
-        public int? CreatedBy { get; set; }
+        public AppUser? CreatedBy { get; set; }
         public Post? ParentPost { get; set; }
+        public Attachment? Attachment { get; set; }
         public List<Post> ReplyPosts { get; set; } = [];
         public List<Tag> PostTags { get; set; } = [];
     }
