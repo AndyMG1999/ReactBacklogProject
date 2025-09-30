@@ -8,15 +8,16 @@ const LoginModal = (props) => {
     const openLoginOrSignup = props.openLoginOrSignup;
 
     const modalStyle = {
-        header: { 
-            backgroundColor: 'rgba(255, 255, 255, 0.0)', // Semi-transparent background
-            backdropFilter: 'blur(2px)', // Frosted glass effect
-            WebkitBackdropFilter: 'blur(2px)' // For Safari compatibility
+        header: {
+            background: 'rgba(255,255,255,0.1)',
+            backgroundColor: 'rgba(255, 255, 255, 0.1)', // Semi-transparent background
+            backdropFilter: 'blur(1px) saturate(180%)', // Frosted glass effect
+            WebkitBackdropFilter: 'blur(1px) saturate(180%)' // For Safari compatibility
           },
         content: {
             background: 'rgba(255,255,255,0.25)',
-            backdropFilter: 'blur(5px)',
-            WebkitBackdropFilter: 'blur(7px)',
+            backdropFilter: 'blur(5px) saturate(180%)',
+            WebkitBackdropFilter: 'blur(5px) saturate(180%)',
             border: '1px solid rgba(255,255,255,0.3)',
             boxShadow: '0 4px 24px rgba(0,0,0,0.08)',
         }

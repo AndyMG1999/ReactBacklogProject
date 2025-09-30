@@ -20,7 +20,7 @@ const Toolbar = () => {
     const iconSize = "2em"
     const toolbarStyle = {
         zIndex: 10,
-        borderRadius: isAtTop? "20px" : "40px",
+        borderRadius: isAtTop? "0px 0px 20px 20px" : "40px",
         transition: "width 0.3s ease-in-out",
         background: 'rgba(255, 255, 255, 0.10)',
         backdropFilter: 'blur(10px) saturate(180%)',
