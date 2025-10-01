@@ -1,6 +1,7 @@
 import { BackgroundImage, Button, Stack, Text,Overlay } from "@mantine/core"
 import { useEffect, useState } from "react";
 import FeedMessageCard from "./components/FeedMessageCard";
+import { Virtuoso } from "react-virtuoso";
 
 const FeedPage = () => {
     const [dummyData,setDummyData]= useState([]);
@@ -28,16 +29,15 @@ const FeedPage = () => {
 
     useEffect(()=>{getDummyData()},[]); 
     
-    // const backgroundStyle = {
-    //     background: `linear-gradient(to bottom, ${theme.colors.cozyBlue[3]}, ${theme.colors.cozyBlue[6]})`, // Example gradient
-    //     padding: '20px',
-    //     borderRadius: '8px',
-    // }
+    const cardStyle = {
+        
+    }
 
     return(
-        <Stack align="center" pt={"xs"}>
+        <Stack align="center" w={"100%"} style={{overflow: "auto"}}>
             <Stack w={"60%"}>
-                {dummyData.map(data => <FeedMessageCard key={data.id} id={data.id} messageSubject={data.messageSubject} messageContent={data.messageContent} messageLikes={data.messageLikes} bottleCount={data.bottleCount}/>)}
+                {/* {dummyData.map(data => <FeedMessageCard key={data.id} id={data.id} messageSubject={data.messageSubject} messageContent={data.messageContent} messageLikes={data.messageLikes} bottleCount={data.bottleCount}/>)} */}
+                <Virtuoso data={dummyData} totalCount={dummyArrSize} useWindowScroll itemContent={(index, data) => <FeedMessageCard messageSubject={data.messageSubject} messageContent={data.messageContent} messageLikes={data.messageLikes} bottleCount={data.bottleCount} cardStyle={cardStyle}/>}/>
             </Stack>
         </Stack>
     );

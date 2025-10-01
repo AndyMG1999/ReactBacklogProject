@@ -18,6 +18,14 @@ const FeedMessageCard = (props) => {
     const messageContent = props.messageContent || "";
     const messageLikes = props.messageLikes || 0;
     const bottleCount = props.bottleCount || 0;
+    
+    const cardStyle = {
+        ...props.cardStyle,
+        background: isClicked? 'rgba(255, 255, 255, 0.1)' : hovered? 'rgba(255, 255, 255, 0.45)' : 'rgba(255, 255, 255, 0.25)', // semi-transparent
+        backdropFilter: hovered? 'blur(2px)' : 'blur(12px)',            // blur effect
+        WebkitBackdropFilter: hovered? 'blur(2px)' : 'blur(12px)', 
+        border: hovered? '1.5px solid rgba(255, 255, 255, 0.2)' : '1px solid rgba(255, 255, 255, 0.2)', // Light border
+    }
 
     const textColor = "#EEEEEE";
 
@@ -26,12 +34,7 @@ const FeedMessageCard = (props) => {
         height: "65%",
     }
 
-    const cardStyle = {
-        background: isClicked? 'rgba(255, 255, 255, 0.1)' : hovered? 'rgba(255, 255, 255, 0.45)' : 'rgba(255, 255, 255, 0.25)', // semi-transparent
-        backdropFilter: hovered? 'blur(2px)' : 'blur(12px)',            // blur effect
-        WebkitBackdropFilter: hovered? 'blur(2px)' : 'blur(12px)', 
-        border: hovered? '1.5px solid rgba(255, 255, 255, 0.2)' : '1px solid rgba(255, 255, 255, 0.2)', // Light border
-    }
+    
 
     function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));

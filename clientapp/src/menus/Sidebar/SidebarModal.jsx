@@ -16,14 +16,14 @@ const SidebarModal = (props) => {
             backgroundColor: 'rgba(255, 255, 255, 0.1)', // Semi-transparent background
             backdropFilter: 'blur(9px)', // Frosted glass effect
             WebkitBackdropFilter: 'blur(9px)', // For Safari compatibility
-            border: '1px solid rgba(255,255,255,0.3)',
+            border: '1px solid rgba(76, 246, 249, 0.43)',
             boxShadow: '0 4px 24px rgba(0,0,0,0.08)',
           },
         content: {
             background: 'rgba(255,255,255,0.1)',
             backdropFilter: 'blur(10px) saturate(180%)',
             WebkitBackdropFilter: 'blur(10px) saturate(180%)',
-            border: '1px solid rgba(255,255,255,0.3)',
+            border: '1px solid rgba(76, 246, 249, 0.43)',
             boxShadow: '0 4px 24px rgba(0,0,0,0.08)',
             position: "relative", // Needed for absolute background
             overflow: "hidden"

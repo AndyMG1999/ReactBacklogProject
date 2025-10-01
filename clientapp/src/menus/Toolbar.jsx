@@ -25,7 +25,7 @@ const Toolbar = () => {
         background: 'rgba(255, 255, 255, 0.10)',
         backdropFilter: 'blur(10px) saturate(180%)',
         WebkitBackdropFilter: 'blur(10px) saturate(180%)',
-        border: '1px solid rgba(255,255,255,0.3)',
+        border: '1px solid rgba(76, 246, 249, 0.43)',
         boxShadow: isAtTop?"":'0 4px 24px rgba(0,0,0,0.08)',
         overflow: "hidden",
         position: "relative",
