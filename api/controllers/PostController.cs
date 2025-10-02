@@ -29,8 +29,15 @@ namespace api.Controllers
         [HttpGet("GetAll")]
         public async Task<IActionResult> GetAll()
         {
-            var posts = await _context.Posts.ToListAsync();
-            return Ok(posts);
+            List<Post> posts = await _context.Posts.Include(e=>e.CreatedBy).Include(e=>e.Attachment).ToListAsync();
+            List<GetPostDto> postDtos = [];
+            foreach (Post post in posts)
+            {
+                CreatedByDto createdByDto = new CreatedByDto { Id = post.CreatedBy?.Id, UserName = post.CreatedBy?.UserName, ProfileImage = post.CreatedBy?.ProfileImage, EmailConfirmed = post.CreatedBy?.EmailConfirmed ?? false };
+                GetPostDto getPostDto = new GetPostDto { ID = post.ID, PostTitle = post.PostTitle, Attachment = post.Attachment, DateCreated = post.DateCreated, LastEdit = post.DateCreated, CreatedBy = createdByDto };
+                postDtos.Add(getPostDto);
+            }
+            return Ok(postDtos);
         }
 
         [HttpGet("Get/{id}")]

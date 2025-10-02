@@ -6,6 +6,7 @@ using api.Hubs;
 using api.Models.ModelEnums;
 using api.Interfaces;
 using api.Services;
+using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -39,24 +40,29 @@ builder.Services.AddScoped<IEmailServices, EmailServices>();
 
 var app = builder.Build();
 
-using (var scope = app.Services.CreateScope())
+using var scope = app.Services.CreateScope();
 {
     var db = scope.ServiceProvider.GetRequiredService<DatabaseContext>();
 
     // Adding Tags
-    db.Tags.Add(new Tag {TagName = "Music🎵" });
-    db.Tags.Add(new Tag {TagName = "All Seven Seas🍾" });
-    db.Tags.Add(new Tag {TagName = "Video Games🎮" });
-    db.Tags.Add(new Tag {TagName = "Rock 🎸" });
-    db.Tags.Add(new Tag {TagName = "Alternative 🎧" });
+    db.Tags.Add(new Tag { TagName = "Music🎵" });
+    db.Tags.Add(new Tag { TagName = "All Seven Seas🍾" });
+    db.Tags.Add(new Tag { TagName = "Video Games🎮" });
+    db.Tags.Add(new Tag { TagName = "Rock 🎸" });
+    db.Tags.Add(new Tag { TagName = "Alternative 🎧" });
+
+    // Creating Fake Users
+    AppUser user1 = new AppUser { Id = "1", UserName = "HappyUser", ProfileImage = null };
+    AppUser user2 = new AppUser { Id = "2", UserName = "MusicUser", ProfileImage = null };
+    AppUser user3 = new AppUser { Id = "3", UserName = "roblox_enjoyer197", ProfileImage = null };
 
     // Adding Posts
-    db.Posts.Add(new Post {PostTitle = "My first post in rainy day", PostBody = "I lowkey don't really know what to write, but glad to say hi to everyone!",});
-    db.Posts.Add(new Post {PostTitle = "Song suggestions for shoegaze?", PostBody = "I've just got into some shoegaze artists and was wondering if anybody had any artists that sound like this." });
-    db.Posts.Add(new Post {PostTitle = "NEW 2XKO TRAILER!!!", PostBody = "" });
+    db.Posts.Add(new Post { PostTitle = "My first post here!", PostBody = "I lowkey don't really know what to write, but glad to say hi to everyone!", CreatedBy=user1, DateCreated = DateTime.Now, LastEdit = DateTime.Now, });
+    db.Posts.Add(new Post { PostTitle = "Song suggestions for shoegaze?", PostBody = "I've just got into some shoegaze artists and was wondering if anybody had any artists that sound like this.", CreatedBy=user2, DateCreated=DateTime.Now, LastEdit=DateTime.Now, });
+    db.Posts.Add(new Post { PostTitle = "NEW 2XKO TRAILER!!!", PostBody = "", CreatedBy=user3, DateCreated=DateTime.Now, LastEdit=DateTime.Now, });
 
     // Adding Attachments
-    db.Attachments.Add(new Attachment { PostID = 2, AttachmentType = AttachmentTypes.Souncloudlink, AttachmentLink="<iframe width=\"100%\" height=\"166\" scrolling=\"no\" frameborder=\"no\" allow=\"autoplay\" src=\"https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/1487715388&color=%23ffffff&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true\"></iframe><div style=\"font-size: 10px; color: #cccccc;line-break: anywhere;word-break: normal;overflow: hidden;white-space: nowrap;text-overflow: ellipsis; font-family: Interstate,Lucida Grande,Lucida Sans Unicode,Lucida Sans,Garuda,Verdana,Tahoma,sans-serif;font-weight: 100;\"><a href=\"https://soundcloud.com/aidenhe\" title=\"aidenh\" target=\"_blank\" style=\"color: #cccccc; text-decoration: none;\">aidenh</a> · <a href=\"https://soundcloud.com/aidenhe/my-bloody-valentine-when-you-sleep\" title=\"my bloody valentine - when you sleep\" target=\"_blank\" style=\"color: #cccccc; text-decoration: none;\">my bloody valentine - when you sleep</a></div>"});
+    db.Attachments.Add(new Attachment { PostID = 2, AttachmentType = AttachmentTypes.Souncloudlink, AttachmentLink = "<iframe width=\"100%\" height=\"166\" scrolling=\"no\" frameborder=\"no\" allow=\"autoplay\" src=\"https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/1487715388&color=%23ffffff&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true\"></iframe><div style=\"font-size: 10px; color: #cccccc;line-break: anywhere;word-break: normal;overflow: hidden;white-space: nowrap;text-overflow: ellipsis; font-family: Interstate,Lucida Grande,Lucida Sans Unicode,Lucida Sans,Garuda,Verdana,Tahoma,sans-serif;font-weight: 100;\"><a href=\"https://soundcloud.com/aidenhe\" title=\"aidenh\" target=\"_blank\" style=\"color: #cccccc; text-decoration: none;\">aidenh</a> · <a href=\"https://soundcloud.com/aidenhe/my-bloody-valentine-when-you-sleep\" title=\"my bloody valentine - when you sleep\" target=\"_blank\" style=\"color: #cccccc; text-decoration: none;\">my bloody valentine - when you sleep</a></div>" });
     db.Attachments.Add(new Attachment { PostID = 3, AttachmentType = AttachmentTypes.YoutubeLink, AttachmentLink = "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/quGZjIkigu4?si=wN5HBxYmtnr2bnUz\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>" });
 
     db.SaveChanges();
