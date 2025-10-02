@@ -33,14 +33,6 @@ function App() {
     setWeatherData(json);
   }
 
-  const fetchDummyData = async () => {
-    const response = await fetch(`./api/post/GetAll`);
-    console.log("API Reponse:",response);
-    if(!response.ok) return;
-    const data = await response.json();
-    console.log("API Data:",data);
-  }
-
   const setUpConnection = async () => {
     connection = new signalR.HubConnectionBuilder()
       .withUrl('http://localhost:5224/testhub') // Replace with your hub URL
@@ -66,7 +58,6 @@ function App() {
   useEffect(() => {
     getCurrentUserInfo();
     fetchReponse();
-    fetchDummyData();
     setUpConnection();
   },[]);
 

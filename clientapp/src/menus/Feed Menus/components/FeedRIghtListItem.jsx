@@ -18,7 +18,7 @@ const FeedRightListItem = (props) => {
         </Group>
 
         <Group>
-            <Title fz={"sm"} lineClamp={2} w={"70%"} c={"white"} m={0}>{data.messageSubject}</Title>
+            <Title fz={"sm"} lineClamp={2} w={"70%"} c={"white"} m={0}>{data.postTitle}</Title>
             <Image radius="md" h={"4em"} w={"4em"} fit="inherit" m={0} src="https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/images/bg-9.png"/>
         </Group>
     

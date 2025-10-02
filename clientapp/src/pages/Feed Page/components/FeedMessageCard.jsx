@@ -7,6 +7,7 @@ import { PiShareFat } from "react-icons/pi";
 import { useHover } from "@mantine/hooks";
 import { useState } from "react";
 import SoundCloudPlayer from "./SoundCloudPlayer";
+import YoutubePlayer from "./YoutubePlayer";
 
 const FeedMessageCard = (props) => {
 
@@ -14,10 +15,14 @@ const FeedMessageCard = (props) => {
     const [isClicked,setIsClicked] = useState(false);
 
     const id = props.id;
-    const messageTitle = props.messageTitle || "If you see this, it means there is no message title set. Consider setting messageTitle to something!";
-    const messageContent = props.messageContent || "";
-    const messageLikes = props.messageLikes || 0;
-    const bottleCount = props.bottleCount || 0;
+    const data = props.data;
+    const messageTitle = data.postTitle || "If you see this, it means there is no message title set. Consider setting messageTitle to something!";
+    const messageContent = data.postBody || "";
+    const messageLikes = data.postLikeCount || 0;
+    const bottleCount = data.postReplyCount || 0;
+
+    const attachment = data.attachment;
+    const attachmentType = attachment?.attachmentType;
     
     const cardStyle = {
         ...props.cardStyle,
@@ -58,17 +63,20 @@ const FeedMessageCard = (props) => {
                 </Group>
                 
                 <Card.Section inheritPadding align="center">
-                    <Group w={{xs:"100%", lg: "85%"}} p={"xs"} m={{xs:"xs", s:"lg"}} bdrs={"lg"} align="center" bd="2px solid white">
-                        <SoundCloudPlayer />
-                    </Group>
+                    {attachmentType === 0 && <Group w={{xs:"100%", lg: "85%"}} p={"xs"} m={{xs:"xs", s:"lg"}} bdrs={"lg"} align="center" bd="2px solid white">
+                         <SoundCloudPlayer />
+                    </Group>}
+                    {attachmentType === 3 && <Group w={{xs:"100%", lg: "85%"}} p={"xs"} m={{xs:"xs", s:"lg"}} bdrs={"lg"} align="center" bd="2px solid white">
+                         <YoutubePlayer />
+                    </Group>}
                 </Card.Section>
 
-                <Card.Section inheritPadding pb={"md"}>
+                {!attachmentType && <Card.Section inheritPadding pb={"md"}>
                     <Text size="lg" lineClamp={5} c={textColor}>{messageContent}</Text>
-                </Card.Section>
+                </Card.Section>}
             </Card.Section>
 
-            <Group pt={"sm"}>
+            <Group pt={"lg"}>
                 <ActionIcon.Group>
                     <ActionIcon variant="default" size="lg"><FaRegHeart style={iconComponentStyle} /></ActionIcon>
                     <ActionIcon.GroupSection size="lg">{`${messageLikes}`}</ActionIcon.GroupSection>
