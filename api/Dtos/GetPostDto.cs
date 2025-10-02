@@ -7,6 +7,8 @@ namespace api.Dtos
         public int ID { get; set; }
         public string PostTitle { get; set; } = "";
         public string PostBody { get; set; } = "";
+        public int PostLikeCount { get; set; } = 0;
+        public int PostReplyCount { get; set; } = 0;
         public DateTime? DateCreated { get; set; } = DateTime.Now;
         public DateTime? LastEdit { get; set; } = DateTime.Now;
 

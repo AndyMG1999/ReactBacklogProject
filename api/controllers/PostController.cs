@@ -34,7 +34,7 @@ namespace api.Controllers
             foreach (Post post in posts)
             {
                 CreatedByDto createdByDto = new CreatedByDto { Id = post.CreatedBy?.Id, UserName = post.CreatedBy?.UserName, ProfileImage = post.CreatedBy?.ProfileImage, EmailConfirmed = post.CreatedBy?.EmailConfirmed ?? false };
-                GetPostDto getPostDto = new GetPostDto { ID = post.ID, PostTitle = post.PostTitle, Attachment = post.Attachment, DateCreated = post.DateCreated, LastEdit = post.DateCreated, CreatedBy = createdByDto };
+                GetPostDto getPostDto = new GetPostDto { ID = post.ID, PostTitle = post.PostTitle, PostBody = post.PostBody, PostLikeCount = post.PostLikeCount, PostReplyCount = post.PostReplyCount, Attachment = post.Attachment, DateCreated = post.DateCreated, LastEdit = post.DateCreated, CreatedBy = createdByDto };
                 postDtos.Add(getPostDto);
             }
             return Ok(postDtos);
