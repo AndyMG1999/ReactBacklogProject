@@ -1,4 +1,4 @@
-import { Card,Button,Title,Text,Group, ActionIcon, Pill } from "@mantine/core";
+import { Card,Button,Title,Text,Group, ActionIcon, Pill, Container } from "@mantine/core";
 import { FaRegHeart } from "react-icons/fa";
 import { LiaLaughSquint } from "react-icons/lia";
 import { BiCool } from "react-icons/bi";
@@ -47,6 +47,7 @@ const FeedMessageCard = (props) => {
     }
 
     return(
+        <Container pb={"md"}>
         <Card ref={ref} padding="lg" shadow="lg" radius="lg" withBorder style={cardStyle}>
             <Card.Section onClick={cardOnClick} inheritPadding pt={"md"}>
                 <Title order={2} lineClamp={2} c={textColor}>{messageTitle}</Title>
@@ -87,6 +88,7 @@ const FeedMessageCard = (props) => {
                 <Button leftSection={<PiShareFat/>}> {`Share this bottle!`}</Button>
             </Group>
         </Card>
+        </Container>
     )
 }
 

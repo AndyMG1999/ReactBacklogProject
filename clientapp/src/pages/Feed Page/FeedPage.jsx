@@ -2,6 +2,8 @@ import { BackgroundImage, Button, Stack, Text,Overlay } from "@mantine/core"
 import { useEffect, useState } from "react";
 import FeedMessageCard from "./components/FeedMessageCard";
 import { Virtuoso } from "react-virtuoso";
+import FeedLeftMenu from "../../menus/Feed Menus/FeedLeftMenu";
+import FeedRightMenu from "../../menus/Feed Menus/FeedRightMenu";
 
 const FeedPage = () => {
     const [dummyData,setDummyData]= useState([]);
@@ -35,9 +37,11 @@ const FeedPage = () => {
 
     return(
         <Stack align="center" w={"100%"} style={{overflow: "auto"}}>
-            <Stack w={"60%"}>
+            <Stack w={"50%"}>
+                <FeedLeftMenu />
                 {/* {dummyData.map(data => <FeedMessageCard key={data.id} id={data.id} messageSubject={data.messageSubject} messageContent={data.messageContent} messageLikes={data.messageLikes} bottleCount={data.bottleCount}/>)} */}
                 <Virtuoso data={dummyData} totalCount={dummyArrSize} useWindowScroll itemContent={(index, data) => <FeedMessageCard messageSubject={data.messageSubject} messageContent={data.messageContent} messageLikes={data.messageLikes} bottleCount={data.bottleCount} cardStyle={cardStyle}/>}/>
+                <FeedRightMenu listData={dummyData} listSize={dummyArrSize}/>
             </Stack>
         </Stack>
     );
