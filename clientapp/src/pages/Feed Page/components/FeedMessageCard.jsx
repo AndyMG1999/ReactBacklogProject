@@ -1,18 +1,18 @@
-import { Card,Button,Title,Text,Group, ActionIcon, Pill, Container } from "@mantine/core";
+import { Card,Button,Title,Text,Group, ActionIcon, Pill, Container, Avatar } from "@mantine/core";
 import { FaRegHeart } from "react-icons/fa";
 import { LiaLaughSquint } from "react-icons/lia";
 import { BiCool } from "react-icons/bi";
 import { PiBeerBottleLight } from "react-icons/pi";
 import { PiShareFat } from "react-icons/pi";
-import { useHover } from "@mantine/hooks";
 import { useState } from "react";
 import SoundCloudPlayer from "./SoundCloudPlayer";
 import YoutubePlayer from "./YoutubePlayer";
+//import { useHover } from "@mantine/hooks";
 
 const FeedMessageCard = (props) => {
 
-    const {hovered,ref} = useHover();
-    const [isClicked,setIsClicked] = useState(false);
+    // const {hovered,ref} = useHover();
+    // const [isClicked,setIsClicked] = useState(false);
 
     const id = props.id;
     const data = props.data;
@@ -20,16 +20,18 @@ const FeedMessageCard = (props) => {
     const messageContent = data.postBody || "";
     const messageLikes = data.postLikeCount || 0;
     const bottleCount = data.postReplyCount || 0;
+    
+    const createdBy = data.createdBy;
 
     const attachment = data.attachment;
     const attachmentType = attachment?.attachmentType;
     
     const cardStyle = {
         ...props.cardStyle,
-        background: isClicked? 'rgba(255, 255, 255, 0.1)' : hovered? 'rgba(255, 255, 255, 0.45)' : 'rgba(255, 255, 255, 0.25)', // semi-transparent
-        backdropFilter: hovered? 'blur(2px)' : 'blur(12px)',            // blur effect
-        WebkitBackdropFilter: hovered? 'blur(2px)' : 'blur(12px)', 
-        border: hovered? '1.5px solid rgba(255, 255, 255, 0.2)' : '1px solid rgba(255, 255, 255, 0.2)', // Light border
+        background: 'rgba(255, 255, 255, 0.25)', // semi-transparent
+        backdropFilter: 'blur(12px)',            // blur effect
+        WebkitBackdropFilter: 'blur(12px)', 
+        border: '1px solid rgba(255, 255, 255, 0.2)', // Light border
     }
 
     const textColor = "#EEEEEE";
@@ -46,16 +48,19 @@ const FeedMessageCard = (props) => {
     }
 
     const cardOnClick = async() => {
-        setIsClicked(true);
-        await sleep(100);
-        setIsClicked(false);
+        console.log("Click!");
     }
 
     return(
         <Container pb={"md"}>
-        <Card ref={ref} padding="lg" shadow="lg" radius="lg" withBorder style={cardStyle}>
+        <Card padding="lg" shadow="lg" radius="lg" withBorder style={cardStyle}>
             <Card.Section onClick={cardOnClick} inheritPadding pt={"md"}>
-                <Title order={2} lineClamp={2} c={textColor}>{messageTitle}</Title>
+                <Group pb={"xs"}>
+                    <Avatar size={"sm"} color="cozyGreen" name={createdBy.userName} />
+                    <Title order={5} c={"white"}>{createdBy.userName}</Title>
+                    <Text size="xs" c={"white"}>LastCreated</Text>
+                </Group>
+                <Title order={3} lineClamp={2} c={textColor}>{messageTitle}</Title>
                 <Group>
                     <Pill size="lg">Test Pill</Pill>
                     <Pill size="lg">Test Pill</Pill>
@@ -64,10 +69,10 @@ const FeedMessageCard = (props) => {
                 
                 <Card.Section inheritPadding align="center">
                     {attachmentType === 0 && <Group w={{xs:"100%", lg: "85%"}} p={"xs"} m={{xs:"xs", s:"lg"}} bdrs={"lg"} align="center" bd="2px solid white">
-                         <SoundCloudPlayer />
+                         <SoundCloudPlayer attachmentLink={attachment.attachmentLink} />
                     </Group>}
                     {attachmentType === 3 && <Group w={{xs:"100%", lg: "85%"}} p={"xs"} m={{xs:"xs", s:"lg"}} bdrs={"lg"} align="center" bd="2px solid white">
-                         <YoutubePlayer />
+                         <YoutubePlayer attachmentLink={attachment.attachmentLink} />
                     </Group>}
                 </Card.Section>
 
