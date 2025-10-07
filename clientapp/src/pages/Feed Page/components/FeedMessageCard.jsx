@@ -39,9 +39,7 @@ const FeedMessageCard = (props) => {
     const iconComponentStyle = {
         width: "65%",
         height: "65%",
-    }
-
-    
+    }   
 
     function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
@@ -62,9 +60,9 @@ const FeedMessageCard = (props) => {
                 </Group>
                 <Title order={3} lineClamp={2} c={textColor}>{messageTitle}</Title>
                 <Group>
+                    <Pill size="lg" bg="cozyBlue">Test Pill</Pill>
                     <Pill size="lg">Test Pill</Pill>
-                    <Pill size="lg">Test Pill</Pill>
-                    <Pill size="lg">Test Pill</Pill>
+                    <Pill size="lg" bg="cozyGreen">Test Pill</Pill>
                 </Group>
                 
                 <Card.Section inheritPadding align="center">

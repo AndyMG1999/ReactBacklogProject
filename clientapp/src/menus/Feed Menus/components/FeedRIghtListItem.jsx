@@ -23,8 +23,8 @@ const FeedRightListItem = (props) => {
         </Group>
     
         <Group>
-            <Text size="sm" c={"white"}>20 hearts</Text>
-            <Text size="sm" c={"white"}>4 replies</Text>
+            <Text size="sm" c={"white"}>{`${data.postLikeCount} hearts`}</Text>
+            <Text size="sm" c={"white"}>{`${data.postReplyCount} replies`}</Text>
         </Group>
         
         <Divider/>

@@ -29,7 +29,7 @@ namespace api.Controllers
         [HttpGet("GetAll")]
         public async Task<IActionResult> GetAll()
         {
-            List<Post> posts = await _context.Posts.Include(e=>e.CreatedBy).Include(e=>e.Attachment).ToListAsync();
+            List<Post> posts = await _context.Posts.Include(e=>e.CreatedBy).Include(e=>e.Attachment).Include(e=>e.PostTags).ToListAsync();
             List<GetPostDto> postDtos = [];
             foreach (Post post in posts)
             {
