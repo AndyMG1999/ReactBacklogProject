@@ -64,7 +64,7 @@ using var scope = app.Services.CreateScope();
     db.Tags.Add(tag5);
 
     // Adding Posts
-    db.Posts.Add(new Post { PostTitle = "My first post here!", PostBody = "I lowkey don't really know what to write, but glad to say hi to everyone!", CreatedBy=user1, DateCreated = DateTime.Now, LastEdit = DateTime.Now, PostTags=[tag1], });
+    db.Posts.Add(new Post { PostTitle = "My first post here!", PostBody = "I lowkey don't really know what to write, but glad to say hi to everyone!", CreatedBy=user1, DateCreated = DateTime.Now, LastEdit = DateTime.Now, PostTags=new List<Tag>(){tag1}, });
     db.Posts.Add(new Post { PostTitle = "Song suggestions for shoegaze?", PostBody = "I've just got into some shoegaze artists and was wondering if anybody had any artists that sound like this.", CreatedBy=user2, DateCreated=DateTime.Now, LastEdit=DateTime.Now, PostTags=[tag2,tag3], });
     db.Posts.Add(new Post { PostTitle = "NEW 2XKO TRAILER!!!", PostBody = "", CreatedBy=user3, DateCreated=DateTime.Now, LastEdit=DateTime.Now, PostTags=[tag4,tag5] });
     db.Posts.Add(new Post { PostTitle = "Anybody have any recommendations for games like Animal Crossing?", PostBody = "I'm not a big fan of the \"farm-type\" cozy games since I never really like the farming systems.\n Kinda looking for a game that has that has the focus on camping and building that ACNH has. I already know about cozy grove btw...", CreatedBy=user3, DateCreated = DateTime.Now, LastEdit = DateTime.Now, PostTags=[tag4], });
