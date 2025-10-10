@@ -43,6 +43,9 @@ var app = builder.Build();
 using var scope = app.Services.CreateScope();
 {
     var db = scope.ServiceProvider.GetRequiredService<DatabaseContext>();
+    // Clear and recreates db schema
+    db.Database.EnsureDeleted();
+    db.Database.EnsureCreated();
     
     // Creating Fake Users
     AppUser user1 = new AppUser { Id = "1", UserName = "HappyUser", ProfileImage = null };
@@ -57,20 +60,18 @@ using var scope = app.Services.CreateScope();
     Tag tag3 = new() { ID=3, TagName="🎸 Shoegaze" };
     Tag tag4 = new() { ID=4, TagName="🎮Video Games" };
     Tag tag5 = new() { ID=5, TagName="Fighting Games🥊🥋🦶" };
-    db.Tags.Add(tag1);
-    db.Tags.Add(tag2);
-    db.Tags.Add(tag3);
-    db.Tags.Add(tag4);
-    db.Tags.Add(tag5);
 
     // Adding Posts
-    db.Posts.Add(new Post { PostTitle = "My first post here!", PostBody = "I lowkey don't really know what to write, but glad to say hi to everyone!", CreatedBy=user1, DateCreated = DateTime.Now, LastEdit = DateTime.Now, PostTags=new List<Tag>(){tag1}, });
-    db.Posts.Add(new Post { PostTitle = "Song suggestions for shoegaze?", PostBody = "I've just got into some shoegaze artists and was wondering if anybody had any artists that sound like this.", CreatedBy=user2, DateCreated=DateTime.Now, LastEdit=DateTime.Now, PostTags=[tag2,tag3], });
-    db.Posts.Add(new Post { PostTitle = "NEW 2XKO TRAILER!!!", PostBody = "", CreatedBy=user3, DateCreated=DateTime.Now, LastEdit=DateTime.Now, PostTags=[tag4,tag5] });
-    db.Posts.Add(new Post { PostTitle = "Anybody have any recommendations for games like Animal Crossing?", PostBody = "I'm not a big fan of the \"farm-type\" cozy games since I never really like the farming systems.\n Kinda looking for a game that has that has the focus on camping and building that ACNH has. I already know about cozy grove btw...", CreatedBy=user3, DateCreated = DateTime.Now, LastEdit = DateTime.Now, PostTags=[tag4], });
-    db.Posts.Add(new Post { PostTitle = "2XKO Character Select Sound Crazy", PostBody = "I don't normally play games but this is pretty good, reminds me a lot of Polyphia and their blend of genres.", CreatedBy=user2, DateCreated=DateTime.Now, LastEdit=DateTime.Now, PostTags=[tag2,tag4,tag5], });
-    db.Posts.Add(new Post { PostTitle = "rec. for music like \"No Vacation\"", PostBody = "herd it was called like bedroom rock, anything similar will be appreciated", CreatedBy=user4, DateCreated=DateTime.Now, LastEdit=DateTime.Now, PostTags=[tag2], });
-    db.Posts.Add(new Post { PostTitle = "Goated Video", PostBody = "I'm sure everybody knows about this beef already, but still highly recommend if you want a deep dive about it.", CreatedBy=user5, DateCreated=DateTime.Now, LastEdit=DateTime.Now, PostTags=[tag1], });
+    Post post1 = new () { PostTitle = "My first post here!", PostBody = "I lowkey don't really know what to write, but glad to say hi to everyone!", CreatedBy = user1, DateCreated = DateTime.Now, LastEdit = DateTime.Now, PostTags = [tag1], };
+    Post post2 = new() { PostTitle = "Song suggestions for shoegaze?", PostBody = "I've just got into some shoegaze artists and was wondering if anybody had any artists that sound like this.", CreatedBy = user2, DateCreated = DateTime.Now, LastEdit = DateTime.Now, PostTags = [tag2, tag3], };
+    Post post3 = new() { PostTitle = "NEW 2XKO TRAILER!!!", PostBody = "", CreatedBy = user3, DateCreated = DateTime.Now, LastEdit = DateTime.Now, PostTags = [tag4, tag5] };
+    Post post4 = new() { PostTitle = "Anybody have any recommendations for games like Animal Crossing?", PostBody = "I'm not a big fan of the \"farm-type\" cozy games since I never really like the farming systems.\n Kinda looking for a game that has that has the focus on camping and building that ACNH has. I already know about cozy grove btw...", CreatedBy = user3, DateCreated = DateTime.Now, LastEdit = DateTime.Now, PostTags = [tag4], };
+    Post post5 = new() { PostTitle = "2XKO Character Select Sound Crazy", PostBody = "I don't normally play games but this is pretty good, reminds me a lot of Polyphia and their blend of genres.", CreatedBy = user2, DateCreated = DateTime.Now, LastEdit = DateTime.Now, PostTags = [tag2, tag4, tag5], };
+    Post post6 = new() { PostTitle = "rec. for music like \"No Vacation\"", PostBody = "herd it was called like bedroom rock, anything similar will be appreciated", CreatedBy = user4, DateCreated = DateTime.Now, LastEdit = DateTime.Now, PostTags = [tag2], };
+    Post post7 = new() { PostTitle = "Goated Video", PostBody = "I'm sure everybody knows about this beef already, but still highly recommend if you want a deep dive about it.", CreatedBy = user5, DateCreated = DateTime.Now, LastEdit = DateTime.Now, PostTags = [tag1], };
+
+    db.Posts.AddRange(post1, post2, post3, post4, post5, post6, post7);
+    db.AddRange(tag1, tag2, tag3, tag4, tag5);
 
     // Adding Attachments
     db.Attachments.Add(new Attachment { PostID = 2, AttachmentType = AttachmentTypes.Souncloudlink, AttachmentLink = "<iframe width=\"100%\" height=\"166\" scrolling=\"no\" frameborder=\"no\" allow=\"autoplay\" src=\"https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/1487715388&color=%23ffffff&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true\"></iframe><div style=\"font-size: 10px; color: #cccccc;line-break: anywhere;word-break: normal;overflow: hidden;white-space: nowrap;text-overflow: ellipsis; font-family: Interstate,Lucida Grande,Lucida Sans Unicode,Lucida Sans,Garuda,Verdana,Tahoma,sans-serif;font-weight: 100;\"><a href=\"https://soundcloud.com/aidenhe\" title=\"aidenh\" target=\"_blank\" style=\"color: #cccccc; text-decoration: none;\">aidenh</a> · <a href=\"https://soundcloud.com/aidenhe/my-bloody-valentine-when-you-sleep\" title=\"my bloody valentine - when you sleep\" target=\"_blank\" style=\"color: #cccccc; text-decoration: none;\">my bloody valentine - when you sleep</a></div>" });
