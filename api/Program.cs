@@ -60,6 +60,7 @@ using var scope = app.Services.CreateScope();
     Tag tag3 = new() { ID=3, TagName="🎸 Shoegaze" };
     Tag tag4 = new() { ID=4, TagName="🎮Video Games" };
     Tag tag5 = new() { ID=5, TagName="Fighting Games🥊🥋🦶" };
+    Tag tag6 = new() { ID = 6, TagName = "🗣️General🗣️" };
 
     // Adding Posts
     Post post1 = new () { PostTitle = "My first post here!", PostBody = "I lowkey don't really know what to write, but glad to say hi to everyone!", CreatedBy = user1, DateCreated = DateTime.Now, LastEdit = DateTime.Now, PostTags = [tag1], };
