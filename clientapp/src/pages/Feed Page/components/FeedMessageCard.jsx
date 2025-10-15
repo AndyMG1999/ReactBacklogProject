@@ -23,6 +23,8 @@ const FeedMessageCard = (props) => {
     
     const createdBy = data.createdBy;
 
+    const postTags = data.postTags;
+
     const attachment = data.attachment;
     const attachmentType = attachment?.attachmentType;
     
@@ -60,9 +62,7 @@ const FeedMessageCard = (props) => {
                 </Group>
                 <Title order={3} lineClamp={2} c={textColor}>{messageTitle}</Title>
                 <Group>
-                    <Pill size="lg" bg="cozyBlue">Test Pill</Pill>
-                    <Pill size="lg">Test Pill</Pill>
-                    <Pill size="lg" bg="cozyGreen">Test Pill</Pill>
+                    {postTags.map((tag,index)=><Pill size="lg" bg={index==0?"cozyBlue":index==2?"cozyGreen":""}>{tag.tagName}</Pill>)}
                 </Group>
                 
                 <Card.Section inheritPadding align="center">
