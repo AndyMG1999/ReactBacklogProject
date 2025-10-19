@@ -20,12 +20,16 @@ const FeedLeftMenu = (props) => {
         position: "relative",
     }
 
+    const buttonStyle = {
+        borderRadius: "30em",
+    }
+
     return(
         <Dialog opened={!isAtTop} size={"md"} position={{top:"30%", left: "1em"}} transitionProps={{ transition: 'fade-right', duration: 200, timingFunction: 'linear' }} style={feedMenuStyle} zIndex={5}>
             <Stack>
-                <Button>Button 1</Button>
-                <Button>Button 2</Button>
-                <Button>Button 3</Button>
+                <Button style={buttonStyle}>Explore</Button>
+                <Button style={buttonStyle} bg={"cozyGreen"}>🔖Personal Tag</Button>
+                <Button style={buttonStyle}>🔖Personal Tag</Button>
             </Stack>
         </Dialog>
     )

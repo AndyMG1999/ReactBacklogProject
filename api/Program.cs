@@ -63,13 +63,13 @@ using var scope = app.Services.CreateScope();
     Tag tag6 = new() { ID = 6, TagName = "🗣️General🗣️" };
 
     // Adding Posts
-    Post post1 = new () { PostTitle = "My first post here!", PostBody = "I lowkey don't really know what to write, but glad to say hi to everyone!", CreatedBy = user1, DateCreated = DateTime.Now, LastEdit = DateTime.Now, PostTags = [tag1], };
-    Post post2 = new() { PostTitle = "Song suggestions for shoegaze?", PostBody = "I've just got into some shoegaze artists and was wondering if anybody had any artists that sound like this.", CreatedBy = user2, DateCreated = DateTime.Now, LastEdit = DateTime.Now, PostTags = [tag2, tag3], };
-    Post post3 = new() { PostTitle = "NEW 2XKO TRAILER!!!", PostBody = "", CreatedBy = user3, DateCreated = DateTime.Now, LastEdit = DateTime.Now, PostTags = [tag4, tag5] };
-    Post post4 = new() { PostTitle = "Anybody have any recommendations for games like Animal Crossing?", PostBody = "I'm not a big fan of the \"farm-type\" cozy games since I never really like the farming systems.\n Kinda looking for a game that has that has the focus on camping and building that ACNH has. I already know about cozy grove btw...", CreatedBy = user3, DateCreated = DateTime.Now, LastEdit = DateTime.Now, PostTags = [tag4], };
-    Post post5 = new() { PostTitle = "2XKO Character Select Sound Crazy", PostBody = "I don't normally play games but this is pretty good, reminds me a lot of Polyphia and their blend of genres.", CreatedBy = user2, DateCreated = DateTime.Now, LastEdit = DateTime.Now, PostTags = [tag2, tag4, tag5], };
-    Post post6 = new() { PostTitle = "rec. for music like \"No Vacation\"", PostBody = "herd it was called like bedroom rock, anything similar will be appreciated", CreatedBy = user4, DateCreated = DateTime.Now, LastEdit = DateTime.Now, PostTags = [tag2], };
-    Post post7 = new() { PostTitle = "Goated Video", PostBody = "I'm sure everybody knows about this beef already, but still highly recommend if you want a deep dive about it.", CreatedBy = user5, DateCreated = DateTime.Now, LastEdit = DateTime.Now, PostTags = [tag1], };
+    Post post1 = new () { PostTitle = "My first post here!", PostBody = "I lowkey don't really know what to write, but glad to say hi to everyone!", CreatedBy = user1, DateCreated = DateTime.UtcNow, LastEdit = DateTime.UtcNow, PostTags = [tag1], };
+    Post post2 = new() { PostTitle = "Song suggestions for shoegaze?", PostBody = "I've just got into some shoegaze artists and was wondering if anybody had any artists that sound like this.", CreatedBy = user2, DateCreated = new DateTime(2001,01,01), LastEdit = DateTime.UtcNow, PostTags = [tag2, tag3], };
+    Post post3 = new() { PostTitle = "NEW 2XKO TRAILER!!!", PostBody = "", CreatedBy = user3, DateCreated = new DateTime(2025,10,16), LastEdit = DateTime.UtcNow, PostTags = [tag4, tag5] };
+    Post post4 = new() { PostTitle = "Anybody have any recommendations for games like Animal Crossing?", PostBody = "I'm not a big fan of the \"farm-type\" cozy games since I never really like the farming systems.\n Kinda looking for a game that has that has the focus on camping and building that ACNH has. I already know about cozy grove btw...", CreatedBy = user3, DateCreated = new DateTime(2025,10,06), LastEdit = DateTime.UtcNow, PostTags = [tag4], };
+    Post post5 = new() { PostTitle = "2XKO Character Select Sound Crazy", PostBody = "I don't normally play games but this is pretty good, reminds me a lot of Polyphia and their blend of genres.", CreatedBy = user2, DateCreated = DateTime.UtcNow, LastEdit = DateTime.UtcNow, PostTags = [tag2, tag4, tag5], };
+    Post post6 = new() { PostTitle = "rec. for music like \"No Vacation\"", PostBody = "herd it was called like bedroom rock, anything similar will be appreciated", CreatedBy = user4, DateCreated = DateTime.UtcNow, LastEdit = DateTime.UtcNow, PostTags = [tag2], };
+    Post post7 = new() { PostTitle = "Goated Video", PostBody = "I'm sure everybody knows about this beef already, but still highly recommend if you want a deep dive about it.", CreatedBy = user5, DateCreated = DateTime.UtcNow, LastEdit = DateTime.UtcNow, PostTags = [tag1], };
 
     db.Posts.AddRange(post1, post2, post3, post4, post5, post6, post7);
     db.AddRange(tag1, tag2, tag3, tag4, tag5);
@@ -103,7 +103,7 @@ app.MapGet("api/weatherforecast", () =>
     var forecast = Enumerable.Range(1, 5).Select(index =>
         new WeatherForecast
         (
-            DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
+            DateOnly.FromDateTime(DateTime.UtcNow.AddDays(index)),
             Random.Shared.Next(-20, 55),
             summaries[Random.Shared.Next(summaries.Length)]
         ))

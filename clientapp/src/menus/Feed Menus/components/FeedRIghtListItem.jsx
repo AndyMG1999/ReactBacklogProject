@@ -1,14 +1,22 @@
 import { Title, Text, Stack, Group, Avatar, Divider, Pill, Image } from "@mantine/core";
-import SoundCloudPlayer from "../../../pages/Feed Page/components/SoundCloudPlayer";
+import { displayDateCreated } from "../../../services/feedServices";
 
 const FeedRightListItem = (props) => {
     const data = props.data;
+    const dateCreated = new Date(data.dateCreated);
+
+    const createdBy = data.createdBy;
+
+    const postTags = data.postTags;
+
+    const attachment = data.attachment;
+    const attachmentType = attachment?.attachmentType;
     return(
     <Stack gap={"xs"} py={"xs"} px={"md"}>  
         <Group>
             <Avatar color="cozyGreen"/>
-            <Title order={6} c={"white"}>Username</Title>
-            <Text size="xs" c={"white"}>LastCreated</Text>
+            <Title order={6} c={"white"}>{createdBy.userName}</Title>
+            <Text size="xs" c={"white"}>{dateCreated.toDateString()}</Text>
         </Group>
         
         <Group>  
