@@ -16,7 +16,7 @@ const FeedRightListItem = (props) => {
         <Group>
             <Avatar color="cozyGreen"/>
             <Title order={6} c={"white"}>{createdBy.userName}</Title>
-            <Text size="xs" c={"white"}>{dateCreated.toDateString()}</Text>
+            <Text size="xs" c={"white"}>{displayDateCreated(dateCreated)}</Text>
         </Group>
         
         <Group>  
