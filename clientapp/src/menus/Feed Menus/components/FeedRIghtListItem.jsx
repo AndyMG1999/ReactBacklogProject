@@ -1,9 +1,11 @@
 import { Title, Text, Stack, Group, Avatar, Divider, Pill, Image } from "@mantine/core";
 import { displayDateCreated } from "../../../services/feedServices";
+import { useMemo } from "react";
 
 const FeedRightListItem = (props) => {
     const data = props.data;
     const dateCreated = new Date(data.dateCreated);
+    const formattedDate = useMemo(() => displayDateCreated(dateCreated), [dateCreated]);
 
     const createdBy = data.createdBy;
 
@@ -16,7 +18,7 @@ const FeedRightListItem = (props) => {
         <Group>
             <Avatar color="cozyGreen"/>
             <Title order={6} c={"white"}>{createdBy.userName}</Title>
-            <Text size="xs" c={"white"}>{displayDateCreated(dateCreated)}</Text>
+            <Text size="xs" c={"white"}>{formattedDate}</Text>
         </Group>
         
         <Group>  

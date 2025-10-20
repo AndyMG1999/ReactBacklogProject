@@ -4,7 +4,8 @@ import { LiaLaughSquint } from "react-icons/lia";
 import { BiCool } from "react-icons/bi";
 import { PiBeerBottleLight } from "react-icons/pi";
 import { PiShareFat } from "react-icons/pi";
-import { useState } from "react";
+import { useMemo } from "react";
+import { displayDateCreated } from "../../../services/feedServices";
 import SoundCloudPlayer from "./SoundCloudPlayer";
 import YoutubePlayer from "./YoutubePlayer";
 //import { useHover } from "@mantine/hooks";
@@ -20,6 +21,9 @@ const FeedMessageCard = (props) => {
     const messageContent = data.postBody || "";
     const messageLikes = data.postLikeCount || 0;
     const bottleCount = data.postReplyCount || 0;
+
+    const dateCreated = new Date(data.dateCreated);
+    const formattedDate = useMemo(() => displayDateCreated(dateCreated), [dateCreated]);
     
     const createdBy = data.createdBy;
 
@@ -58,11 +62,11 @@ const FeedMessageCard = (props) => {
                 <Group pb={"xs"}>
                     <Avatar size={"sm"} color="cozyGreen" name={createdBy.userName} />
                     <Title order={5} c={"white"}>{createdBy.userName}</Title>
-                    <Text size="xs" c={"white"}>LastCreated</Text>
+                    <Text size="xs" c={"white"}>{formattedDate}</Text>
                 </Group>
                 <Title order={3} lineClamp={2} c={textColor}>{messageTitle}</Title>
                 <Group>
-                    {postTags.map((tag,index)=><Pill size="lg" bg={index==0?"cozyBlue":index==2?"cozyGreen":""}>{tag.tagName}</Pill>)}
+                    {postTags.map((tag,index)=><Pill size="lg" bg={index==0?"cozyBlue":index==2?"cozyGreen":""} key={index}>{tag.tagName}</Pill>)}
                 </Group>
                 
                 <Card.Section inheritPadding align="center">
