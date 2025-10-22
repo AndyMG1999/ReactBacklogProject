@@ -1,9 +1,52 @@
 import { Container, Avatar, Button, Stack, TextInput, Textarea, TagsInput, Checkbox, Text, Select,Group } from "@mantine/core";
 import AttachButton from "./AttachButton";
-import * as signalR from '@microsoft/signalr';
-import { useEffect } from "react";
+import { useState,useContext } from "react";
+import { useForm,isNotEmpty } from "@mantine/form";
+import { AppContext } from "../../../contexts/ApplicationContext";
 
 const CreateMessageForm = () => {
+    const {userInfo} = useContext(AppContext);
+    const userName = userInfo?.userName;
+
+    const [openErrorAlert,setOpenErrorAlert] = useState(false);
+    const [openSuccessAlert,setOpenSuccessAlert] = useState(false);
+
+    const form = useForm({
+    mode: 'uncontrolled',
+    initialValues: {
+      postTitle: "",
+      postTags: "",
+      postBody: "",
+      attachmentType: 0,
+      attachmentLink: "",
+      allowMultipleResponses: false,
+      formSendOff: "",
+    },
+
+    validate: {
+      postTitle: isNotEmpty('Required'),
+      postTags: isNotEmpty('Please Enter At Least 1 Tag'),
+      postBody: isNotEmpty('Required'),
+    },
+    });
+
+    const onSubmitPost = async (data) => {
+        setOpenErrorAlert(false);
+        setOpenSuccessAlert(false);
+        console.log("Registering with:",data);
+        
+        // if(!response.ok) {
+        //     const error = await response.text();
+        //     setErrorMessage(error);
+        //     setOpenErrorAlert(true);
+        //     return;
+        // }
+        
+        // console.log("Register Success!");
+        // form.reset();
+        // setOpenSuccessAlert(true);
+    }
+
     const containerStyle = {
         background: 'rgba(255,255,255,0.25)',
         backdropFilter: 'blur(2px)',
@@ -34,12 +77,15 @@ const CreateMessageForm = () => {
     // Example usage:
     return(
         <Stack w={"50%"} align="center">
+        <form onSubmit={form.onSubmit(onSubmitPost)}>     
             <Container w={"100%"} style={containerStyle}>
                 <Stack gap={"md"} p={"10px"}>
-                    <TextInput fw={"bold"} pt={"20px"} placeholder="Title your bottle here!"/>
+                    <TextInput fw={"bold"} pt={"20px"} placeholder="Title your bottle here!" key={form.key('postTitle')} {...form.getInputProps('postTitle')}/>
                     
                     <TagsInput
                     required
+                    key={form.key('postTags')}
+                    {...form.getInputProps('postTags')}
                     radius="lg"
                     fw={"bold"}
                     description="Add up to 3 tags"
@@ -52,22 +98,23 @@ const CreateMessageForm = () => {
                     }}
                     />
                     
-                    <Textarea placeholder="Enter you message here!" autosize minRows={10} maxRows={10} />
+                    <Textarea placeholder="Enter you message here!" autosize minRows={10} maxRows={10} key={form.key('postBody')} {...form.getInputProps('postBody')} />
                     
                     <AttachButton />
                     
-                    <Checkbox label="Allow Multiple Responses" />
+                    <Checkbox label="Allow Multiple Responses" key={form.key('allowMultipleResponses')} {...form.getInputProps('allowMultipleResponses')} />
                     
                     <Group>
-                        <Select placeholder="Pick a sendoff!" allowDeselect={false} fw={"bold"} data={sendOffsData} />
-                        <Text fw="bold">Account Name</Text>
-                        <Avatar color="cozyGreen"/>
+                        <Select placeholder="Pick a sendoff!" allowDeselect={false} fw={"bold"} data={sendOffsData} key={form.key('formSendOff')} {...form.getInputProps('formSendOff')} />
+                        <Text fw="bold">{userName??"Account Name"}</Text>
+                        <Avatar color="cozyGreen" name={userName??""}/>
                     
                     </Group>
                 </Stack>
             </Container>
 
-            <Button size="compact-md" fullWidth>Toss to the sea!</Button>   
+            <Button type="submit" size="compact-md" fullWidth>Toss to the sea!</Button>   
+        </form>
         </Stack>
     )
 }
