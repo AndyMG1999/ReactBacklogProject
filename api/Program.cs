@@ -55,11 +55,11 @@ using var scope = app.Services.CreateScope();
     AppUser user5 = new AppUser { Id = "5", UserName = "TiredSoftwareDev", ProfileImage = null };
 
     // Adding Tags
-    Tag tag1 = new() { ID=1, TagName="🍾 All Seven Seas" };
-    Tag tag2 = new() { ID=2, TagName="🎵Music🎵" };
-    Tag tag3 = new() { ID=3, TagName="🎸 Shoegaze" };
-    Tag tag4 = new() { ID=4, TagName="🎮Video Games" };
-    Tag tag5 = new() { ID=5, TagName="Fighting Games🥊🥋🦶" };
+    Tag tag1 = new() { ID=1, TagName="🍾 All Seven Seas", PostsTaggedCount=456121 };
+    Tag tag2 = new() { ID=2, TagName="🎵Music🎵" , PostsTaggedCount=62123};
+    Tag tag3 = new() { ID=3, TagName="🎸 Shoegaze", PostsTaggedCount=3011 };
+    Tag tag4 = new() { ID=4, TagName="🎮Video Games", PostsTaggedCount=2100093 };
+    Tag tag5 = new() { ID=5, TagName="Fighting Games🥊🥋🦶", PostsTaggedCount=103072 };
     Tag tag6 = new() { ID = 6, TagName = "🗣️General🗣️" };
 
     // Adding Posts
@@ -72,7 +72,7 @@ using var scope = app.Services.CreateScope();
     Post post7 = new() { PostTitle = "Goated Video", PostBody = "I'm sure everybody knows about this beef already, but still highly recommend if you want a deep dive about it.", CreatedBy = user5, DateCreated = DateTime.UtcNow, LastEdit = DateTime.UtcNow, PostTags = [tag1], };
 
     db.Posts.AddRange(post1, post2, post3, post4, post5, post6, post7);
-    db.AddRange(tag1, tag2, tag3, tag4, tag5);
+    db.AddRange(tag1, tag2, tag3, tag4, tag5, tag6);
 
     // Adding Attachments
     db.Attachments.Add(new Attachment { PostID = 2, AttachmentType = AttachmentTypes.Souncloudlink, AttachmentLink = "<iframe width=\"100%\" height=\"166\" scrolling=\"no\" frameborder=\"no\" allow=\"autoplay\" src=\"https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/1487715388&color=%23ffffff&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true\"></iframe><div style=\"font-size: 10px; color: #cccccc;line-break: anywhere;word-break: normal;overflow: hidden;white-space: nowrap;text-overflow: ellipsis; font-family: Interstate,Lucida Grande,Lucida Sans Unicode,Lucida Sans,Garuda,Verdana,Tahoma,sans-serif;font-weight: 100;\"><a href=\"https://soundcloud.com/aidenhe\" title=\"aidenh\" target=\"_blank\" style=\"color: #cccccc; text-decoration: none;\">aidenh</a> · <a href=\"https://soundcloud.com/aidenhe/my-bloody-valentine-when-you-sleep\" title=\"my bloody valentine - when you sleep\" target=\"_blank\" style=\"color: #cccccc; text-decoration: none;\">my bloody valentine - when you sleep</a></div>" });

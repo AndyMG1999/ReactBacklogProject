@@ -1,27 +1,35 @@
 import { Container, Avatar, Button, Stack, TextInput, Textarea, TagsInput, Checkbox, Text, Select,Group } from "@mantine/core";
 import AttachButton from "./AttachButton";
-import { useState,useContext } from "react";
+import { useState,useContext, useEffect } from "react";
 import { useForm,isNotEmpty } from "@mantine/form";
 import { AppContext } from "../../../contexts/ApplicationContext";
 import { createPost } from "../../../services/postServices";
+import { getAllTags,simplifyTagCount } from "../../../services/tagServices";
 
 const CreateMessageForm = () => {
     const {userInfo} = useContext(AppContext);
     const userName = userInfo?.userName;
 
+    const [tagsStringData, setTagsStringData] = useState([]);
+    const [tagsRenderData, setTagsRenderData] = useState({});
     const [openErrorAlert,setOpenErrorAlert] = useState(false);
     const [openSuccessAlert,setOpenSuccessAlert] = useState(false);
-
-    const fullTagsData = [
-        {id: 0,label:"🍾 All Seven Seas",numberOfBottles:13442},
-    ]
-    const tagsStringData = fullTagsData.map((data)=>data.label);
+    
+    const getTags = async () => {
+        const data = await getAllTags();
+        console.log("data:",data);
+        // Sets up tags with just tag names eg. ["Tag 1", "Tag 2"]
+        setTagsStringData(data.map(tag => tag.tagName));
+        // Sets up so tags can display number of bottles tagged with given tag eg. {"Tag 1": 23,"Tag 2": 100}
+        data.map(tag => {setTagsRenderData((prev)=>({...prev, [tag.tagName]: simplifyTagCount(tag.postsTaggedCount)}))});
+    }
+    useEffect(()=>{getTags()},[])
 
     const form = useForm({
     mode: 'uncontrolled',
     initialValues: {
       postTitle: "",
-      postTags: [tagsStringData[0]],
+      postTags: ["🍾 All Seven Seas"],
       postBody: "",
       attachmentType: "",
       attachmentLink: "",
@@ -94,10 +102,10 @@ const CreateMessageForm = () => {
                     description="Add up to 3 tags"
                     placeholder="Who should receive this bottle?"
                     maxTags={3}
-                    defaultValue={[tagsStringData[0]]}
+                    defaultValue={["🍾 All Seven Seas"]}
                     data={tagsStringData}
                     renderOption={(tag)=>{
-                        return `${tag.option.value} -${fullTagsData.find(data => data.label == tag.option.value).numberOfBottles} Bottles Sent!`;
+                        return `${tag.option.value} -${tagsRenderData[tag.option.value]} Bottles Sent!`;
                     }}
                     />
                     

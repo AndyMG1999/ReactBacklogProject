@@ -13,6 +13,7 @@ namespace api.Models
     {
         public int ID { get; set; }
         public string? TagName { get; set; }
+        public int PostsTaggedCount { get; set; } = 0;
         // Reference
         [JsonIgnore]
         public ICollection<Post> PostsTaggedIn { get; set; } = new List<Post>();
