@@ -3,6 +3,7 @@ import AttachButton from "./AttachButton";
 import { useState,useContext } from "react";
 import { useForm,isNotEmpty } from "@mantine/form";
 import { AppContext } from "../../../contexts/ApplicationContext";
+import { createPost } from "../../../services/postServices";
 
 const CreateMessageForm = () => {
     const {userInfo} = useContext(AppContext);
@@ -11,15 +12,20 @@ const CreateMessageForm = () => {
     const [openErrorAlert,setOpenErrorAlert] = useState(false);
     const [openSuccessAlert,setOpenSuccessAlert] = useState(false);
 
+    const fullTagsData = [
+        {id: 0,label:"🍾 All Seven Seas",numberOfBottles:13442},
+    ]
+    const tagsStringData = fullTagsData.map((data)=>data.label);
+
     const form = useForm({
     mode: 'uncontrolled',
     initialValues: {
       postTitle: "",
-      postTags: "",
+      postTags: [tagsStringData[0]],
       postBody: "",
-      attachmentType: 0,
+      attachmentType: "",
       attachmentLink: "",
-      allowMultipleResponses: false,
+      allowMultipleResponses: true,
       formSendOff: "",
     },
 
@@ -33,18 +39,20 @@ const CreateMessageForm = () => {
     const onSubmitPost = async (data) => {
         setOpenErrorAlert(false);
         setOpenSuccessAlert(false);
+        data.postTags = data.postTags.map(tag=>({tagName: tag}));
         console.log("Registering with:",data);
+        const response = await createPost(data);
         
-        // if(!response.ok) {
-        //     const error = await response.text();
-        //     setErrorMessage(error);
-        //     setOpenErrorAlert(true);
-        //     return;
-        // }
+        if(!response.ok) {
+            const error = await response.text();
+            setErrorMessage(error);
+            setOpenErrorAlert(true);
+            return;
+        }
         
-        // console.log("Register Success!");
-        // form.reset();
-        // setOpenSuccessAlert(true);
+        console.log("Register Success!");
+        form.reset();
+        setOpenSuccessAlert(true);
     }
 
     const containerStyle = {
@@ -66,13 +74,8 @@ const CreateMessageForm = () => {
         padding: '1em'
     }
 
-    const fullTagsData = [
-        {id: 0,label:"🍾 All Seven Seas",numberOfBottles:13442},
-    ]
-
     const sendOffsData =['Warm Regards,', 'Sincerely,', 'Take Care!']
 
-    const tagsStringData = fullTagsData.map((data)=>data.label);
 
     // Example usage:
     return(
@@ -102,7 +105,7 @@ const CreateMessageForm = () => {
                     
                     <AttachButton />
                     
-                    <Checkbox label="Allow Multiple Responses" key={form.key('allowMultipleResponses')} {...form.getInputProps('allowMultipleResponses')} />
+                    <Checkbox label="Allow Multiple Responses" key={form.key('allowMultipleResponses')} {...form.getInputProps('allowMultipleResponses',{ type: 'checkbox' })} />
                     
                     <Group>
                         <Select placeholder="Pick a sendoff!" allowDeselect={false} fw={"bold"} data={sendOffsData} key={form.key('formSendOff')} {...form.getInputProps('formSendOff')} />

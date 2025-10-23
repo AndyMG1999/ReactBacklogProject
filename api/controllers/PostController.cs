@@ -59,10 +59,21 @@ namespace api.Controllers
             AppUser? user = await _userManager.FindByEmailAsync(userEmail);
             if (user == null) return BadRequest();
 
+            List<Tag> postTags = [];
+            foreach (TagDto tagDto in postDto.PostTags)
+            {
+                Tag? tag = await _context.Tags.Where(tag => tag.TagName == tagDto.TagName).FirstOrDefaultAsync();
+                if (tag != null) postTags.Add(tag);
+                else postTags.Add(new Tag { TagName = tagDto.TagName });
+            }
+
             Post newPost = new Post
             {
                 PostTitle = postDto.PostTitle,
+                PostTags = postTags,
                 PostBody = postDto.PostBody,
+                PostSendOff = postDto.PostSendOff,
+                AllowMultipleResponses = postDto.AllowMultipleResponses,
                 DateCreated = DateTime.Now,
                 LastEdit = DateTime.Now,
                 CreatedBy = user,

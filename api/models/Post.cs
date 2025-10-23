@@ -12,6 +12,8 @@ namespace api.Models
         public string PostBody { get; set; } = "";
         public int PostLikeCount { get; set; } = 0;
         public int PostReplyCount { get; set; } = 0;
+        public bool AllowMultipleResponses { get; set; }
+        public string PostSendOff { get; set; } = "";
         public DateTime? DateCreated { get; set; } = DateTime.Now;
         public DateTime? LastEdit { get; set; } = DateTime.Now;
 
