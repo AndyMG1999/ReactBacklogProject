@@ -1,4 +1,4 @@
-import { Container, Avatar, Button, Stack, TextInput, Textarea, TagsInput, Checkbox, Text, Select,Group } from "@mantine/core";
+import { Container, Avatar, Button, Stack, TextInput, Textarea, TagsInput, Checkbox, Text, Select,Group,Alert } from "@mantine/core";
 import AttachButton from "./AttachButton";
 import { useState,useContext, useEffect } from "react";
 import { useForm,isNotEmpty } from "@mantine/form";
@@ -10,10 +10,10 @@ const CreateMessageForm = () => {
     const {userInfo} = useContext(AppContext);
     const userName = userInfo?.userName;
 
+    const [displayField, setDisplayField] = useState(null);
     const [tagsStringData, setTagsStringData] = useState([]);
     const [tagsRenderData, setTagsRenderData] = useState({});
     const [openErrorAlert,setOpenErrorAlert] = useState(false);
-    const [openSuccessAlert,setOpenSuccessAlert] = useState(false);
     
     const getTags = async () => {
         const data = await getAllTags();
@@ -21,6 +21,7 @@ const CreateMessageForm = () => {
         // Sets up tags with just tag names eg. ["Tag 1", "Tag 2"]
         setTagsStringData(data.map(tag => tag.tagName));
         // Sets up so tags can display number of bottles tagged with given tag eg. {"Tag 1": 23,"Tag 2": 100}
+        setTagsRenderData([]);
         data.map(tag => {setTagsRenderData((prev)=>({...prev, [tag.tagName]: simplifyTagCount(tag.postsTaggedCount)}))});
     }
     useEffect(()=>{getTags()},[])
@@ -46,21 +47,18 @@ const CreateMessageForm = () => {
 
     const onSubmitPost = async (data) => {
         setOpenErrorAlert(false);
-        setOpenSuccessAlert(false);
         data.postTags = data.postTags.map(tag=>({tagName: tag}));
-        console.log("Registering with:",data);
+        data.attachmentType = displayField;
+        console.log("data subtmitted", data);
         const response = await createPost(data);
         
         if(!response.ok) {
             const error = await response.text();
-            setErrorMessage(error);
             setOpenErrorAlert(true);
             return;
         }
         
-        console.log("Register Success!");
         form.reset();
-        setOpenSuccessAlert(true);
     }
 
     const containerStyle = {
@@ -83,9 +81,8 @@ const CreateMessageForm = () => {
     }
 
     const sendOffsData =['Warm Regards,', 'Sincerely,', 'Take Care!']
+    const errorMessage = "Error Submitting Form...😢"
 
-
-    // Example usage:
     return(
         <Stack w={"50%"} align="center">
         <form onSubmit={form.onSubmit(onSubmitPost)}>     
@@ -111,8 +108,9 @@ const CreateMessageForm = () => {
                     
                     <Textarea placeholder="Enter you message here!" autosize minRows={10} maxRows={10} key={form.key('postBody')} {...form.getInputProps('postBody')} />
                     
-                    <AttachButton />
-                    
+                    <AttachButton setDisplayField={setDisplayField}/>
+                    {displayField != null && <TextInput key={form.key('attachmentLink')} {...form.getInputProps('attachmentLink')} placeholder="enter your link here..." />}
+
                     <Checkbox label="Allow Multiple Responses" key={form.key('allowMultipleResponses')} {...form.getInputProps('allowMultipleResponses',{ type: 'checkbox' })} />
                     
                     <Group>
@@ -121,10 +119,11 @@ const CreateMessageForm = () => {
                         <Avatar color="cozyGreen" name={userName??""}/>
                     
                     </Group>
+                    {openErrorAlert && <Alert variant="filled" color="red" title={errorMessage??"Error"} onClose={()=>setOpenErrorAlert(false)} withCloseButton radius={"lg"}/>}   
                 </Stack>
             </Container>
 
-            <Button type="submit" size="compact-md" fullWidth>Toss to the sea!</Button>   
+            <Button type="submit" size="compact-md" fullWidth mt={"md"}>Toss to the sea!</Button>
         </form>
         </Stack>
     )

@@ -3,7 +3,7 @@ export const createPost = async (data) => {
         postTitle: data.postTitle,
         postTags: data.postTags,
         postBody: data.postBody,
-        attachmentDto: data.attachmentType? {
+        attachmentDto: data.attachmentType && data.attachmentLink? {
             attachmentType: data.attachmentType,
             attachmentLink: data.attachmentLink,
         }: null,

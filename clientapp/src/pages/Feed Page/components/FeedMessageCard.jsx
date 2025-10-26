@@ -70,10 +70,10 @@ const FeedMessageCard = (props) => {
                 </Group>
                 
                 <Card.Section inheritPadding align="center">
-                    {attachmentType === 0 && <Group w={{xs:"100%", lg: "85%"}} p={"xs"} m={{xs:"xs", s:"lg"}} bdrs={"lg"} align="center" bd="2px solid white">
+                    {attachmentType === 4 && <Group w={{xs:"100%", lg: "85%"}} p={"xs"} m={{xs:"xs", s:"lg"}} bdrs={"lg"} align="center" bd="2px solid white">
                          <SoundCloudPlayer attachmentLink={attachment.attachmentLink} />
                     </Group>}
-                    {attachmentType === 3 && <Group w={{xs:"100%", lg: "85%"}} p={"xs"} m={{xs:"xs", s:"lg"}} bdrs={"lg"} align="center" bd="2px solid white">
+                    {attachmentType === 5 && <Group w={{xs:"100%", lg: "85%"}} p={"xs"} m={{xs:"xs", s:"lg"}} bdrs={"lg"} align="center" bd="2px solid white">
                          <YoutubePlayer attachmentLink={attachment.attachmentLink} />
                     </Group>}
                 </Card.Section>
