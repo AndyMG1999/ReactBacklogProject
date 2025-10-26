@@ -29,7 +29,7 @@ const AttachButton = (props) => {
             </Menu.Sub.Dropdown>
         </Menu.Sub>
 
-        <Menu.Item leftSection={<FiYoutube/>} onClick={()=>setDisplayField(5)}>Youtube Link</Menu.Item>
+        <Menu.Item leftSection={<FiYoutube/>} onClick={()=>setDisplayField(5)}>Youtube Embed</Menu.Item>
 
       </Menu.Dropdown>
     </Menu>

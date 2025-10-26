@@ -82,6 +82,7 @@ const CreateMessageForm = () => {
 
     const sendOffsData =['Warm Regards,', 'Sincerely,', 'Take Care!']
     const errorMessage = "Error Submitting Form...😢"
+    const linkPlaceholderText = displayField==0? "enter image link here...":displayField==1? "enter link here...":displayField==2?"enter spotify embeded code here...":displayField==3?"enter apple music embeded code here...": displayField==4? "enter soundcloud embeded code here...": displayField==5?"enter youtube embeded code here...":"enter attachment here...";
 
     return(
         <Stack w={"50%"} align="center">
@@ -109,15 +110,14 @@ const CreateMessageForm = () => {
                     <Textarea placeholder="Enter you message here!" autosize minRows={10} maxRows={10} key={form.key('postBody')} {...form.getInputProps('postBody')} />
                     
                     <AttachButton setDisplayField={setDisplayField}/>
-                    {displayField != null && <TextInput key={form.key('attachmentLink')} {...form.getInputProps('attachmentLink')} placeholder="enter your link here..." />}
+                    {displayField != null && <TextInput key={form.key('attachmentLink')} {...form.getInputProps('attachmentLink')} placeholder={linkPlaceholderText} />}
 
-                    <Checkbox label="Allow Multiple Responses" key={form.key('allowMultipleResponses')} {...form.getInputProps('allowMultipleResponses',{ type: 'checkbox' })} />
+                    <Checkbox label="Allow Multiple Responses" key={form.key('allowMultipleResponses')} {...form.getInputProps('allowMultipleResponses',{ type: 'checkbox' })} c={"white"} />
                     
                     <Group>
                         <Select placeholder="Pick a sendoff!" allowDeselect={false} fw={"bold"} data={sendOffsData} key={form.key('formSendOff')} {...form.getInputProps('formSendOff')} />
-                        <Text fw="bold">{userName??"Account Name"}</Text>
+                        <Text fw="bold" c={"white"}>{userName??"Account Name"}</Text>
                         <Avatar color="cozyGreen" name={userName??""}/>
-                    
                     </Group>
                     {openErrorAlert && <Alert variant="filled" color="red" title={errorMessage??"Error"} onClose={()=>setOpenErrorAlert(false)} withCloseButton radius={"lg"}/>}   
                 </Stack>

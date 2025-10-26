@@ -8,6 +8,7 @@ import { useMemo } from "react";
 import { displayDateCreated } from "../../../services/feedServices";
 import SoundCloudPlayer from "./SoundCloudPlayer";
 import YoutubePlayer from "./YoutubePlayer";
+import WebsiteLinkCard from "./WebsiteLinkCard";
 //import { useHover } from "@mantine/hooks";
 
 const FeedMessageCard = (props) => {
@@ -70,6 +71,9 @@ const FeedMessageCard = (props) => {
                 </Group>
                 
                 <Card.Section inheritPadding align="center">
+                    {attachmentType === 1 && <Group w={{xs:"100%", lg: "75%"}} p={"xs"} m={{xs:"xs", s:"xs"}} bdrs={"lg"} align="center" bd="2px solid white">
+                         <WebsiteLinkCard attachmentLink={attachment.attachmentLink}/>
+                    </Group>}
                     {attachmentType === 4 && <Group w={{xs:"100%", lg: "85%"}} p={"xs"} m={{xs:"xs", s:"lg"}} bdrs={"lg"} align="center" bd="2px solid white">
                          <SoundCloudPlayer attachmentLink={attachment.attachmentLink} />
                     </Group>}

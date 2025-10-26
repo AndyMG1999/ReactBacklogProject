@@ -62,12 +62,12 @@ function App() {
   },[]);
 
   const backgroundStyle = {
-    background: `linear-gradient(to bottom, ${theme.colors.backgroundBlue[9]}, ${theme.colors.backgroundBlue[8]})`, // Example gradient
+    background: `linear-gradient(to bottom, ${theme.colors.gray[9]}, ${theme.colors.gray[8]})`, // Example gradient
   }
 
   return (
   <Flex direction={"column"} style={backgroundStyle}>
-    <Snowfall color='#046896ff' snowflakeCount={45} wind={[0,0]} radius={[0.5,3]} speed={[7.5,10]}/>
+    {/* <Snowfall color='#046896ff' snowflakeCount={45} wind={[0,0]} radius={[0.5,3]} speed={[7.5,10]}/> */}
     <Toolbar/>
     <Routes>
       <Route path='/' element={<LandingPage />} />
