@@ -37,6 +37,7 @@ builder.Services.AddIdentityApiEndpoints<AppUser>()
     .AddEntityFrameworkStores<DatabaseContext>();
 
 builder.Services.AddScoped<IEmailServices, EmailServices>();
+builder.Services.AddScoped<ILinkServices, LinkServices>();
 
 var app = builder.Build();
 

@@ -13,6 +13,7 @@ namespace api.Models
         public AttachmentTypes? AttachmentType { get; set; }
         public string? AttachmentLink { get; set; }
         public string? WebsiteLinkTitle { get; set; }
+        public string? WebsiteLinkIcon { get; set; }
         public int PostID { get; set; }
 
     }

@@ -71,8 +71,8 @@ const FeedMessageCard = (props) => {
                 </Group>
                 
                 <Card.Section inheritPadding align="center">
-                    {attachmentType === 1 && <Group w={{xs:"100%", lg: "75%"}} p={"xs"} m={{xs:"xs", s:"xs"}} bdrs={"lg"} align="center" bd="2px solid white">
-                         <WebsiteLinkCard attachmentLink={attachment.attachmentLink}/>
+                    {attachmentType === 1 && <Group w={{xs:"100%", lg: "75%"}} p={"xs"} m={{xs:"xs", s:"xs "}} bdrs={"lg"} align="center" bd="2px solid white">
+                         <WebsiteLinkCard attachment={attachment}/>
                     </Group>}
                     {attachmentType === 4 && <Group w={{xs:"100%", lg: "85%"}} p={"xs"} m={{xs:"xs", s:"lg"}} bdrs={"lg"} align="center" bd="2px solid white">
                          <SoundCloudPlayer attachmentLink={attachment.attachmentLink} />

@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Authorization;
 using api.Dtos;
 using Microsoft.AspNetCore.Identity;
 using System.Security.Claims;
+using api.Interfaces;
 
 namespace api.Controllers
 {
@@ -18,18 +19,20 @@ namespace api.Controllers
     public class PostController : Controller
     {
         private readonly DatabaseContext _context;
+        ILinkServices _linkServices;
         UserManager<AppUser> _userManager;
 
-        public PostController(DatabaseContext dbContext, UserManager<AppUser> userManager)
+        public PostController(DatabaseContext dbContext, UserManager<AppUser> userManager, ILinkServices linkServices)
         {
             _context = dbContext;
+            _linkServices = linkServices;
             _userManager = userManager;
         }
 
         [HttpGet("GetAll")]
         public async Task<IActionResult> GetAll()
         {
-            List<Post> posts = await _context.Posts.Include(e=>e.CreatedBy).Include(e=>e.Attachment).Include(e=>e.PostTags).ToListAsync();
+            List<Post> posts = await _context.Posts.Include(e => e.CreatedBy).Include(e => e.Attachment).Include(e => e.PostTags).ToListAsync();
             List<GetPostDto> postDtos = [];
             foreach (Post post in posts)
             {
@@ -86,10 +89,23 @@ namespace api.Controllers
             newAttachment.PostID = newPost.ID;
             newAttachment.AttachmentType = postDto.AttachmentDto.AttachmentType;
             newAttachment.AttachmentLink = postDto.AttachmentDto.AttachmentLink;
+            if (postDto.AttachmentDto.AttachmentType == Models.ModelEnums.AttachmentTypes.Link && postDto.AttachmentDto.AttachmentLink != null)
+            {
+                LinkMetadataDto metadataDto = await _linkServices.GetLinkMetadata(postDto.AttachmentDto.AttachmentLink);
+                newAttachment.WebsiteLinkTitle = metadataDto.LinkTitle;
+                newAttachment.WebsiteLinkIcon = metadataDto.LinkIcon;
+            }
             newPost.Attachment = newAttachment;
             await _context.SaveChangesAsync();
 
             return Ok();
+        }
+
+        [HttpPost("TestLink")]
+        public async Task<IActionResult> TestLink([FromBody] string url)
+        {
+            LinkMetadataDto linkMetadataDto = await _linkServices.GetLinkMetadata(url);
+            return Ok(linkMetadataDto);
         }
     }
 }
