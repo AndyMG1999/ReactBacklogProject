@@ -5,6 +5,7 @@ import { useForm,isNotEmpty } from "@mantine/form";
 import { AppContext } from "../../../contexts/ApplicationContext";
 import { createPost } from "../../../services/postServices";
 import { getAllTags,simplifyTagCount } from "../../../services/tagServices";
+import { FaCheckCircle } from "react-icons/fa";
 
 const CreateMessageForm = () => {
     const {userInfo} = useContext(AppContext);
@@ -13,7 +14,9 @@ const CreateMessageForm = () => {
     const [displayField, setDisplayField] = useState(null);
     const [tagsStringData, setTagsStringData] = useState([]);
     const [tagsRenderData, setTagsRenderData] = useState({});
+    const [isCorrectAttachment, setIsCorrectAttachment] = useState(false);
     const [openErrorAlert,setOpenErrorAlert] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
     
     const getTags = async () => {
         const data = await getAllTags();
@@ -26,6 +29,15 @@ const CreateMessageForm = () => {
     }
     useEffect(()=>{getTags()},[])
 
+    const checkAttachmentLink = (link) => {
+        const linkRegExp = /\w+[.]\w+/;
+        const soundcloudRegExp = /<iframe.*tracks\/.*[&]/i;
+        const youtubeRegExp = /src=[/]/
+        if(displayField == 1) return link.match(linkRegExp);
+        if(displayField == 2) return link.match(soundcloudRegExp);
+        if(displayField == 5) return link.match(youtubeRegExp);
+    }
+
     const form = useForm({
     mode: 'uncontrolled',
     initialValues: {
@@ -37,6 +49,9 @@ const CreateMessageForm = () => {
       allowMultipleResponses: true,
       formSendOff: "",
     },
+    onValuesChange: (values) => {
+        setIsCorrectAttachment(checkAttachmentLink(values.attachmentLink));
+    },
 
     validate: {
       postTitle: isNotEmpty('Required'),
@@ -46,6 +61,7 @@ const CreateMessageForm = () => {
     });
 
     const onSubmitPost = async (data) => {
+        setIsLoading(true);
         setOpenErrorAlert(false);
         data.postTags = data.postTags.map(tag=>({tagName: tag}));
         data.attachmentType = displayField;
@@ -59,6 +75,7 @@ const CreateMessageForm = () => {
         }
         
         form.reset();
+        setIsLoading(false);
     }
 
     const containerStyle = {
@@ -89,7 +106,7 @@ const CreateMessageForm = () => {
         <form onSubmit={form.onSubmit(onSubmitPost)}>     
             <Container w={"100%"} style={containerStyle}>
                 <Stack gap={"md"} p={"10px"}>
-                    <TextInput fw={"bold"} pt={"20px"} placeholder="Title your bottle here!" key={form.key('postTitle')} {...form.getInputProps('postTitle')}/>
+                    <TextInput fw={"bold"} pt={"20px"} placeholder="Title your bottle here!" key={form.key('postTitle')} {...form.getInputProps('postTitle')} disabled={isLoading}/>
                     
                     <TagsInput
                     required
@@ -102,20 +119,21 @@ const CreateMessageForm = () => {
                     maxTags={3}
                     defaultValue={["🍾 All Seven Seas"]}
                     data={tagsStringData}
+                    disabled={isLoading}
                     renderOption={(tag)=>{
                         return `${tag.option.value} -${tagsRenderData[tag.option.value]} Bottles Sent!`;
                     }}
                     />
                     
-                    <Textarea placeholder="Enter you message here!" autosize minRows={10} maxRows={10} key={form.key('postBody')} {...form.getInputProps('postBody')} />
+                    <Textarea placeholder="Enter you message here!" autosize minRows={10} maxRows={10} key={form.key('postBody')} {...form.getInputProps('postBody')} disabled={isLoading}/>
                     
-                    <AttachButton setDisplayField={setDisplayField}/>
-                    {displayField != null && <TextInput key={form.key('attachmentLink')} {...form.getInputProps('attachmentLink')} placeholder={linkPlaceholderText} />}
+                    <AttachButton setDisplayField={setDisplayField} isLoading={isLoading}/>
+                    {displayField != null && <TextInput key={form.key('attachmentLink')} {...form.getInputProps('attachmentLink')} placeholder={linkPlaceholderText} disabled={isLoading} rightSection={isCorrectAttachment && <FaCheckCircle/>}/>}
 
-                    <Checkbox label="Allow Multiple Responses" key={form.key('allowMultipleResponses')} {...form.getInputProps('allowMultipleResponses',{ type: 'checkbox' })} c={"white"} />
+                    <Checkbox label="Allow Multiple Responses" key={form.key('allowMultipleResponses')} {...form.getInputProps('allowMultipleResponses',{ type: 'checkbox' })} c={"white"} disabled={isLoading}/>
                     
                     <Group>
-                        <Select placeholder="Pick a sendoff!" allowDeselect={false} fw={"bold"} data={sendOffsData} key={form.key('formSendOff')} {...form.getInputProps('formSendOff')} />
+                        <Select placeholder="Pick a sendoff!" allowDeselect={false} fw={"bold"} data={sendOffsData} key={form.key('formSendOff')} {...form.getInputProps('formSendOff')} disabled={isLoading} />
                         <Text fw="bold" c={"white"}>{userName??"Account Name"}</Text>
                         <Avatar color="cozyGreen" name={userName??""}/>
                     </Group>
@@ -123,7 +141,7 @@ const CreateMessageForm = () => {
                 </Stack>
             </Container>
 
-            <Button type="submit" size="compact-md" fullWidth mt={"md"}>Toss to the sea!</Button>
+            <Button type="submit" size="compact-md" fullWidth mt={"md"} loading={isLoading}>Toss to the sea!</Button>
         </form>
         </Stack>
     )

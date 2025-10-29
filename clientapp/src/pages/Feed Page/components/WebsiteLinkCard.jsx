@@ -12,10 +12,10 @@ const WebsiteLinkCard = (props) => {
     return(
         <Card shadow="sm" radius="md" withBorder component="a" w={"100%"} href={attachmentLink} target="a_blank">
             <Group>
-                <Image radius="md" h={"4em"} w={"8em"} fit="inherit" m={0} src={linkIcon??""}/>
-                <Stack gap={"xs"} justify="flex-start">
-                    <Title order={4}>{linkTitle}</Title>
-                    <Text size="sm" c="dimmed">{attachmentLink}</Text>
+                <Image radius="md" h={"4em"} w={"8em"} fit="inherit" m={0} src={linkIcon||"error"}/>
+                <Stack w={"60%"}>
+                    <Title order={4} lineClamp={1}>{linkTitle||attachmentLink}</Title>
+                    <Text size="sm" c="dimmed" lineClamp={1}>{attachmentLink}</Text>
                 </Stack>
             </Group>
         </Card>

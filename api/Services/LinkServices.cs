@@ -14,6 +14,7 @@ namespace api.Services
     {
         public async Task<LinkMetadataDto> GetLinkMetadata(string url)
         {
+             Uri uri = new Uri(url);
             using (HttpClient client = new HttpClient())
             {
                 HttpResponseMessage response = await client.GetAsync(url);
@@ -22,15 +23,19 @@ namespace api.Services
                 // Load the HTML content into HtmlAgilityPack's HtmlDocument
                 var htmlDoc = new HtmlDocument();
                 htmlDoc.LoadHtml(htmlString);
-                
+
                 // Select the <title> node
                 HtmlNode titleNode = htmlDoc.DocumentNode.SelectSingleNode("//head/title");
-                string linkTitle = titleNode?.InnerText??"";
-                //First Attempt To Find Image
-                // Select the meta tag with property="og:image"
-                HtmlNode ogImageNode = htmlDoc.DocumentNode.SelectSingleNode("//meta[@property='og:image']")??htmlDoc.DocumentNode.SelectSingleNode("//meta[@name='og:image']")??htmlDoc.DocumentNode.SelectSingleNode("//link[@rel='icon']");
-                string linkIcon = ogImageNode.GetAttributeValue("content", string.Empty);
-                if(linkIcon == "") linkIcon = ogImageNode.GetAttributeValue("href", string.Empty);
+                string linkTitle = titleNode?.InnerText ?? "";
+                //Attempt To Find Image
+                HtmlNode ogImageNode = htmlDoc.DocumentNode.SelectSingleNode("//meta[@property='og:image']") ?? htmlDoc.DocumentNode.SelectSingleNode("//meta[@name='og:image']") ?? htmlDoc.DocumentNode.SelectSingleNode("//link[@rel='icon']") ?? htmlDoc.DocumentNode.SelectSingleNode("//link[@rel='shortcut icon']");
+                string linkIcon = "";
+                if (ogImageNode != null)
+                {
+                    linkIcon = ogImageNode.GetAttributeValue("content", string.Empty);
+                    if (linkIcon == "") linkIcon = ogImageNode.GetAttributeValue("href", string.Empty);
+                    if (linkIcon.StartsWith('/')) linkIcon = "//" + uri.Host + linkIcon;
+                }
 
                 return new LinkMetadataDto { LinkTitle = linkTitle, LinkIcon = linkIcon };
             }

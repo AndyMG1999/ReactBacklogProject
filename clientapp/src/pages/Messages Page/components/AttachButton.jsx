@@ -9,10 +9,11 @@ import { FiYoutube } from "react-icons/fi";
 
 const AttachButton = (props) => {
   const setDisplayField = props.setDisplayField;
+  const isLoading = props.isLoading;
   return(
     <Menu width={200} position="top">
       <Menu.Target>
-        <Button leftSection={<FaLink/>}>Attach</Button>
+        <Button leftSection={<FaLink/>} disabled={isLoading}>Attach</Button>
       </Menu.Target>
 
       <Menu.Dropdown>

@@ -91,9 +91,18 @@ namespace api.Controllers
             newAttachment.AttachmentLink = postDto.AttachmentDto.AttachmentLink;
             if (postDto.AttachmentDto.AttachmentType == Models.ModelEnums.AttachmentTypes.Link && postDto.AttachmentDto.AttachmentLink != null)
             {
-                LinkMetadataDto metadataDto = await _linkServices.GetLinkMetadata(postDto.AttachmentDto.AttachmentLink);
-                newAttachment.WebsiteLinkTitle = metadataDto.LinkTitle;
-                newAttachment.WebsiteLinkIcon = metadataDto.LinkIcon;
+                try
+                {
+                    LinkMetadataDto metadataDto = await _linkServices.GetLinkMetadata(postDto.AttachmentDto.AttachmentLink);
+                    newAttachment.WebsiteLinkTitle = metadataDto.LinkTitle;
+                    newAttachment.WebsiteLinkIcon = metadataDto.LinkIcon;
+
+                }
+                catch (Exception e)
+                {
+                    newAttachment.WebsiteLinkTitle = "";
+                    newAttachment.WebsiteLinkIcon = "";
+                }
             }
             newPost.Attachment = newAttachment;
             await _context.SaveChangesAsync();
