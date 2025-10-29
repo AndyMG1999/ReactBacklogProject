@@ -13,7 +13,7 @@ const MessagesPage = () => {
     }
 
     return(
-        <Stack justify="center" align="center" style={messagePageStyle}>
+        <Stack w={"100%"} justify="center" align="center" style={messagePageStyle}>
             <Stack gap={"xs"} w={"90%"} p={"md"} align="center">
                 {sendOrRecieveBottle == "recieve"? <h1>Recieve</h1>:
                 sendOrRecieveBottle == "send"? <CreateMessageForm />:

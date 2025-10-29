@@ -1,4 +1,4 @@
-import { Container, Avatar, Button, Stack, TextInput, Textarea, TagsInput, Checkbox, Text, Select,Group,Alert } from "@mantine/core";
+import { Container, Avatar, Button, Stack, TextInput, Textarea, TagsInput, Checkbox, Text, Select,Group,Alert,LoadingOverlay,Loader } from "@mantine/core";
 import AttachButton from "./AttachButton";
 import { useState,useContext, useEffect } from "react";
 import { useForm,isNotEmpty } from "@mantine/form";
@@ -34,7 +34,7 @@ const CreateMessageForm = () => {
         const soundcloudRegExp = /<iframe.*tracks\/.*[&]/i;
         const youtubeRegExp = /src=[/]/
         if(displayField == 1) return link.match(linkRegExp);
-        if(displayField == 2) return link.match(soundcloudRegExp);
+        if(displayField == 4) return link.match(soundcloudRegExp);
         if(displayField == 5) return link.match(youtubeRegExp);
     }
 
@@ -105,7 +105,8 @@ const CreateMessageForm = () => {
         <Stack w={"50%"} align="center">
         <form onSubmit={form.onSubmit(onSubmitPost)}>     
             <Container w={"100%"} style={containerStyle}>
-                <Stack gap={"md"} p={"10px"}>
+                <Stack w="100%" gap={"md"} p={"10px"}>
+                    <LoadingOverlay visible={isLoading} loaderProps={{ children: <Loader color="cozyBlue" size="xl" type="bars" /> }} />
                     <TextInput fw={"bold"} pt={"20px"} placeholder="Title your bottle here!" key={form.key('postTitle')} {...form.getInputProps('postTitle')} disabled={isLoading}/>
                     
                     <TagsInput

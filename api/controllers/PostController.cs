@@ -66,8 +66,9 @@ namespace api.Controllers
             foreach (TagDto tagDto in postDto.PostTags)
             {
                 Tag? tag = await _context.Tags.Where(tag => tag.TagName == tagDto.TagName).FirstOrDefaultAsync();
+                if (tag != null) tag.PostsTaggedCount += 1;
                 if (tag != null) postTags.Add(tag);
-                else postTags.Add(new Tag { TagName = tagDto.TagName });
+                else postTags.Add(new Tag { TagName = tagDto.TagName, PostsTaggedCount = 1 });
             }
 
             Post newPost = new Post
@@ -100,6 +101,7 @@ namespace api.Controllers
                 }
                 catch (Exception e)
                 {
+                    Console.WriteLine($"{e}: Leaving Link Attachment Blank");
                     newAttachment.WebsiteLinkTitle = "";
                     newAttachment.WebsiteLinkIcon = "";
                 }
