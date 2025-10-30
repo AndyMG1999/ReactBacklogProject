@@ -35,3 +35,11 @@ export const getUserInfo = async () => {
     const data = await response.json();
     return data;
 }
+
+export const logoutUser = async () => {
+    const response = await fetch("./api/account/logout",{
+        method: "POST",
+    });
+    if(!response.ok) throw Error("Error Logging Out User :(");
+    return response;
+}

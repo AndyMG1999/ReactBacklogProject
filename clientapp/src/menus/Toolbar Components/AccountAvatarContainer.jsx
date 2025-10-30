@@ -1,9 +1,10 @@
 import { useContext } from "react";
 import { Avatar, Menu, Text } from "@mantine/core";
 import { AppContext } from "../../contexts/ApplicationContext";
+import { logoutUser } from "../../services/authServices";
 
 const AccountAvatarContainer = () => {
-    const {userInfo} = useContext(AppContext);
+    const {userInfo,setUserInfo} = useContext(AppContext);
     const userName = userInfo.userName;
 
     const menuStyles = {
@@ -17,6 +18,12 @@ const AccountAvatarContainer = () => {
             filter: "saturate(200%)",
         },
     };
+
+    const logoutUserOnClick = async() => {
+        const reponse = await logoutUser();
+        if(!reponse.ok) return;
+        setUserInfo(null);
+    }
 
     return(
     <Menu withArrow offset={-5} radius="lg" width="15em" styles={menuStyles}>
@@ -32,7 +39,7 @@ const AccountAvatarContainer = () => {
             <Menu.Divider/>
             <Menu.Item>Settings</Menu.Item>
             <Menu.Divider/>
-            <Menu.Item color="red">Sign Out</Menu.Item>
+            <Menu.Item color="red" onClick={logoutUserOnClick}>Sign Out</Menu.Item>
         </Menu.Dropdown>
     </Menu>
     )
