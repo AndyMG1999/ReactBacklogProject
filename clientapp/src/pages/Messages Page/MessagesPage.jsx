@@ -2,6 +2,8 @@ import { Button, Container, Stack, TextInput, Textarea, Transition } from "@mant
 import SendOrRecieveBottleForm from "./components/SendOrRecieveForm";
 import CreateMessageForm from "./components/CreateMessageForm";
 import { useState } from "react";
+import SendMessageForm from "./components/RecieveMessageForm";
+import RecieveMessageForm from "./components/RecieveMessageForm";
 
 const MessagesPage = () => {
     const [sendOrRecieveBottle, setSendOrRecieveBottle] = useState(null);
@@ -15,7 +17,7 @@ const MessagesPage = () => {
     return(
         <Stack w={"100%"} justify="center" align="center" style={messagePageStyle}>
             <Stack gap={"xs"} w={"90%"} p={"md"} align="center">
-                {sendOrRecieveBottle == "recieve"? <h1>Recieve</h1>:
+                {sendOrRecieveBottle == "recieve"? <RecieveMessageForm />:
                 sendOrRecieveBottle == "send"? <CreateMessageForm />:
                 <SendOrRecieveBottleForm setSendOrRecieve={setSendOrRecieveBottle}/>}
             </Stack>
