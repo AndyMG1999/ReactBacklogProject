@@ -66,9 +66,21 @@ namespace api.Controllers
             foreach (TagDto tagDto in postDto.PostTags)
             {
                 Tag? tag = await _context.Tags.Where(tag => tag.TagName == tagDto.TagName).FirstOrDefaultAsync();
-                if (tag != null) tag.PostsTaggedCount += 1;
-                if (tag != null) postTags.Add(tag);
-                else postTags.Add(new Tag { TagName = tagDto.TagName, PostsTaggedCount = 1 });
+                if (tag != null)
+                {
+                    TagUserInteraction? interaction = await _context.TagUserInteractions.Where(interaction => interaction.Tag == tag && interaction.User == user && interaction.TagInteractionType == Models.ModelEnums.TagInteractionTypes.CreatedPostTag).FirstOrDefaultAsync();
+                    if (interaction != null) interaction.Amount += 1;
+                    else _context.TagUserInteractions.Add(new TagUserInteraction { Tag = tag, TagInteractionType = Models.ModelEnums.TagInteractionTypes.CreatedPostTag, User = user, Amount = 1 });
+                    tag.PostsTaggedCount += 1;
+                    postTags.Add(tag);
+                }
+                else
+                {
+                    Tag newTag = new Tag { TagName = tagDto.TagName, PostsTaggedCount = 1 };
+                    _context.TagUserInteractions.Add(new TagUserInteraction { Tag = newTag, TagInteractionType = Models.ModelEnums.TagInteractionTypes.CreatedPostTag, User = user, Amount = 1 });
+                    postTags.Add(newTag);
+                    
+                }
             }
 
             Post newPost = new Post
@@ -117,6 +129,22 @@ namespace api.Controllers
         {
             LinkMetadataDto linkMetadataDto = await _linkServices.GetLinkMetadata(url);
             return Ok(linkMetadataDto);
+        }
+
+        [HttpGet("GetTagInteractions")]
+        public async Task<IActionResult> GetTagInterations()
+        {
+            List<TagUserInteractionDto> tagUserInteractionDtos = [];
+            List<TagUserInteraction> tagUserInteractions = await _context.TagUserInteractions.Include(t => t.Tag).Include(t => t.User).ToListAsync();
+            foreach (TagUserInteraction interaction in tagUserInteractions)
+            {
+                AppUser? user = interaction.User;
+                if (user == null) continue;
+                UserInfoDto userInfoDto = new UserInfoDto { UserId = user.Id, Email = user.Email, UserName = user.UserName, EmailConfirmed = user.EmailConfirmed, PhoneNumber = user.PhoneNumber, ProfileImage = user.ProfileImage};
+                TagUserInteractionDto tagUserInteractionDto = new TagUserInteractionDto { ID = interaction.ID, Amount = interaction.Amount, Tag = interaction.Tag, TagInteractionType = interaction.TagInteractionType, UserInfoDto = userInfoDto };
+                tagUserInteractionDtos.Add(tagUserInteractionDto);
+            }
+            return Ok(tagUserInteractionDtos);
         }
     }
 }

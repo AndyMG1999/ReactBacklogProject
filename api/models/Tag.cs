@@ -17,5 +17,7 @@ namespace api.Models
         // Reference
         [JsonIgnore]
         public ICollection<Post> PostsTaggedIn { get; set; } = new List<Post>();
+        [JsonIgnore]
+        public ICollection<TagUserInteraction> TagUserInteractions { get; set; } = [];
     }
 }

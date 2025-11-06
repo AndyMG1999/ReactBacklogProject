@@ -72,8 +72,13 @@ using var scope = app.Services.CreateScope();
     Post post6 = new() { PostTitle = "rec. for music like \"No Vacation\"", PostBody = "herd it was called like bedroom rock, anything similar will be appreciated", CreatedBy = user4, DateCreated = DateTime.UtcNow, LastEdit = DateTime.UtcNow, PostTags = [tag2], };
     Post post7 = new() { PostTitle = "Goated Video", PostBody = "I'm sure everybody knows about this beef already, but still highly recommend if you want a deep dive about it.", CreatedBy = user5, DateCreated = DateTime.UtcNow, LastEdit = DateTime.UtcNow, PostTags = [tag1], };
 
-    db.Posts.AddRange(post1, post2, post3, post4, post5, post6, post7);
-    db.AddRange(tag1, tag2, tag3, tag4, tag5, tag6);
+    // Adding TagInteractions
+    TagUserInteraction interaction1 = new TagUserInteraction { Tag = tag4, Amount = 32, User = user3, TagInteractionType = TagInteractionTypes.CreatedPostTag };
+    TagUserInteraction interaction2 = new TagUserInteraction { Tag = tag3, Amount = 12, User = user2, TagInteractionType = TagInteractionTypes.RepliedPostTag };
+
+    await db.TagUserInteractions.AddRangeAsync(interaction1, interaction2);
+    await db.Posts.AddRangeAsync(post1, post2, post3, post4, post5, post6, post7);
+    await db.Tags.AddRangeAsync(tag1, tag2, tag3, tag4, tag5, tag6);
 
     // Adding Attachments
     db.Attachments.Add(new Attachment { PostID = 2, AttachmentType = AttachmentTypes.Souncloudlink, AttachmentLink = "<iframe width=\"100%\" height=\"166\" scrolling=\"no\" frameborder=\"no\" allow=\"autoplay\" src=\"https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/1487715388&color=%23ffffff&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true\"></iframe><div style=\"font-size: 10px; color: #cccccc;line-break: anywhere;word-break: normal;overflow: hidden;white-space: nowrap;text-overflow: ellipsis; font-family: Interstate,Lucida Grande,Lucida Sans Unicode,Lucida Sans,Garuda,Verdana,Tahoma,sans-serif;font-weight: 100;\"><a href=\"https://soundcloud.com/aidenhe\" title=\"aidenh\" target=\"_blank\" style=\"color: #cccccc; text-decoration: none;\">aidenh</a> · <a href=\"https://soundcloud.com/aidenhe/my-bloody-valentine-when-you-sleep\" title=\"my bloody valentine - when you sleep\" target=\"_blank\" style=\"color: #cccccc; text-decoration: none;\">my bloody valentine - when you sleep</a></div>" });
